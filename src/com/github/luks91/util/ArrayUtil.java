@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package com.github.luks91.distance;
+package com.github.luks91.util;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+public final class ArrayUtil {
 
-/** Verified */
-class EdgePathDistanceCalculator implements INodesDistanceCalculable {
-
-	private static final double SIGMA = Double.MAX_VALUE;
+	private ArrayUtil(){}
 	
-	@Override
-	public double calculate(double[][] adjacencyMatrix, int i, int j) {
-		if (adjacencyMatrix[i][j] == 0)
-			return 1.0d / SIGMA;
-		
-		return 1.0d / adjacencyMatrix[i][j];
+	public static double sumArrayElements(double[] array) {
+		double sum = 0.0d;
+		for (int i=0; i < array.length; ++i) {
+			sum += array[i];
+		}
+		return sum;
 	}
+	
 }

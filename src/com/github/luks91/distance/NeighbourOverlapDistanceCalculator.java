@@ -18,6 +18,7 @@ package com.github.luks91.distance;
 
 import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
 
+/** Verified */
 class NeighbourOverlapDistanceCalculator implements INodesDistanceCalculable {
 
 	@Override
@@ -27,5 +28,4 @@ class NeighbourOverlapDistanceCalculator implements INodesDistanceCalculable {
 
 		return 1.0 - ((neighbourhoodSum - neighbourhoodDiff) / (neighbourhoodSum + neighbourhoodDiff));
 	}
-
 }

@@ -18,10 +18,13 @@ package com.github.luks91.distance;
 
 import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
 
+/** Verified */
 class AdjacencyRelationDistanceCalculator implements INodesDistanceCalculable {
 
 	@Override
 	public double calculate(double[][] adjacencyMatrix, int i, int j) {
-		return Math.sqrt(DistanceUtil.calculateNeighbourhoodDistanceSum(adjacencyMatrix, i, j));
+		return Math.sqrt(
+				DistanceUtil.calculateNeighbourhoodDistancePowDiff(
+						adjacencyMatrix, i, j));
 	}
 }

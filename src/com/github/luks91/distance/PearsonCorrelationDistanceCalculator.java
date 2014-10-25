@@ -18,18 +18,19 @@ package com.github.luks91.distance;
 
 import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
 
+/** Verified */
 class PearsonCorrelationDistanceCalculator implements INodesDistanceCalculable {
 
 	@Override
 	public double calculate(double[][] adjacencyMatrix, int i, int j) {
-		return 1.0 * calculateUpperValue(adjacencyMatrix, i, j)
-				/ calculateLowerValue(adjacencyMatrix, i, j);
+		return 1.0d - (1.0 * calculateUpperValue(adjacencyMatrix, i, j)
+				/ calculateLowerValue(adjacencyMatrix, i, j));
 	}
 
 	private double calculateUpperValue(double[][] adjacencyMatrix, int i, int j) {
 		double upperValue = 0.0d;
 
-		double nodesAmount = 1.0 * adjacencyMatrix[i].length;
+		double nodesAmount = 1.0d * adjacencyMatrix[i].length;
 		double iAverage = DistanceUtil.calculateNeighbourhoodWeightSum(
 				adjacencyMatrix, i) / nodesAmount;
 		double jAverage = DistanceUtil.calculateNeighbourhoodWeightSum(

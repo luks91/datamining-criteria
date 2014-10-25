@@ -19,19 +19,20 @@ package com.github.luks91.criteria;
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.util.ArrayUtil;
 
 class ModularityCriteriaCalculator implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
 			INodesDistanceCalculable nodesDistanceCalculator) {
-		
+
 		int datasetSize = clusteredDataset.size();
-		
+
 		double[][] adjacencyMatrix = clusteredDataset.getAdjacencyMatrix();
 		double[] clustersSums = new double[clusteredDataset.getClustersAmount()];
 		double E = calculateE(adjacencyMatrix, datasetSize);
-		
+
 		for (int i = 0; i < datasetSize - 1; ++i) {
 			for (int j = i + 1; j < datasetSize - 1; ++j) {
 				if (verticesAreInTheSameClaster(clusteredDataset, i, j)) {
@@ -42,44 +43,40 @@ class ModularityCriteriaCalculator implements ClusteringCriteriaCalculable {
 				}
 			}
 		}
-		
-		return 0.5d * E * sumDoubleArray(clustersSums);
+
+		return 0.5d * E * ArrayUtil.sumArrayElements(clustersSums);
 	}
-	
+
 	private double calculateE(double[][] adjacencyMatrix, int datasetSize) {
 		double returnSum = 0.0d;
-		
-		for (int i=0; i < datasetSize - 1; ++i) {
-			for (int j=i+1; i < datasetSize - 1; ++i) {
+
+		for (int i = 0; i < datasetSize - 1; ++i) {
+			for (int j = i + 1; i < datasetSize - 1; ++i) {
 				returnSum += adjacencyMatrix[i][j];
 			}
 		}
-		
+
 		return 0.5d * returnSum;
 	}
 
 	private boolean verticesAreInTheSameClaster(ClusteredDataset dataset,
 			int i, int j) {
+		
 		return dataset.getClusterIndex(i) == dataset.getClusterIndex(j);
 	}
-	
-	private double calculateMultSums(double[][] adjacencyMatrix, int i, int j, int datasetSize) {
+
+	private double calculateMultSums(double[][] adjacencyMatrix, int i, int j,
+			int datasetSize) {
+		
 		double iSum = 0.0d;
 		double jSum = 0.0d;
-		
+
 		for (int currIndex = 0; currIndex < datasetSize; ++currIndex) {
 			iSum += adjacencyMatrix[i][currIndex];
 			jSum += adjacencyMatrix[currIndex][j];
 		}
-		
+
 		return iSum * jSum;
 	}
-	
-	private double sumDoubleArray(double[] array) {
-		double sum = 0.0d;
-		for (int i=0; i < array.length; ++i) {
-			sum += array[i];
-		}
-		return sum;
-	}
+
 }

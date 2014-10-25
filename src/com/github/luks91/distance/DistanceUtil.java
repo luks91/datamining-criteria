@@ -18,45 +18,100 @@ package com.github.luks91.distance;
 
 final class DistanceUtil {
 
-	private DistanceUtil() {};
-	
-	
-	public static double calculateNeighbourhoodWeightSum(double[][] adjacencyMatrix, int i) {
-		double weightSum = 0.0d;
+	private DistanceUtil() {
+	};
+
+	public static double calculateNeighbourhoodWeightSum(
+			double[][] adjacencyMatrix, int i) {
 		
-		for (int currIndex=0; currIndex < adjacencyMatrix[i].length; ++currIndex) {
+		double weightSum = 0.0d;
+
+		for (int currIndex = 0; currIndex < adjacencyMatrix[i].length; ++currIndex) {
 			weightSum += adjacencyMatrix[i][currIndex];
 		}
-		
+
 		return weightSum;
 	}
-	
-	public static double calculateNeighbourhoodDistanceSum(double[][] adjacencyMatrix, int i, int j) {
-		return calculateNeighbourhoodDistance(adjacencyMatrix, i, j, NeighbourhoodDistanceType.SUM);
+
+	public static double calculateNeighbourhoodDistanceSum(
+			double[][] adjacencyMatrix, int i, int j) {
+		
+		return calculateNeighbourhoodDistance(adjacencyMatrix, i, j,
+				NeighbourhoodDistanceType.SUM_ABS);
 	}
-	
-	public static double calculateNeighbourhoodDistanceDiff(double[][] adjacencyMatrix, int i, int j) {
-		return calculateNeighbourhoodDistance(adjacencyMatrix, i, j, NeighbourhoodDistanceType.DIFF);
+
+	public static double calculateNeighbourhoodDistanceDiff(
+			double[][] adjacencyMatrix, int i, int j) {
+		
+		return calculateNeighbourhoodDistance(adjacencyMatrix, i, j,
+				NeighbourhoodDistanceType.DIFF_ABS);
 	}
-	
-	private static double calculateNeighbourhoodDistance(double[][] adjacencyMatrix, int i, int j, 
+
+	public static double calculateNeighbourhoodDistancePowSum(
+			double[][] adjacencyMatrix, int i, int j) {
+		
+		return calculateNeighbourhoodDistance(adjacencyMatrix, i, j,
+				NeighbourhoodDistanceType.SUM_POW);
+	}
+
+	public static double calculateNeighbourhoodDistancePowDiff(
+			double[][] adjacencyMatrix, int i, int j) {
+		
+		return calculateNeighbourhoodDistance(adjacencyMatrix, i, j,
+				NeighbourhoodDistanceType.DIFF_POW);
+	}
+
+	private static double calculateNeighbourhoodDistance(
+			double[][] adjacencyMatrix, int i, int j,
 			NeighbourhoodDistanceType distanceType) {
-		
+
 		double neighbourhoodSum = 0.0d;
-		double modifyParam = distanceType == NeighbourhoodDistanceType.SUM ? 1.0 : -1.0;
-		
-		for (int currIndex=0; currIndex < adjacencyMatrix[i].length; ++currIndex) {
+
+		for (int currIndex = 0; currIndex < adjacencyMatrix[i].length; ++currIndex) {
 			if (currIndex == i || currIndex == j)
 				continue;
-			
-			neighbourhoodSum += Math.pow(adjacencyMatrix[i][currIndex]
-					+ modifyParam * adjacencyMatrix[j][currIndex], 2.0d);
+
+			neighbourhoodSum += distanceType.createPartialDistanceSum(
+					adjacencyMatrix[i][currIndex],
+					adjacencyMatrix[j][currIndex]);
 		}
-		
+
 		return neighbourhoodSum;
 	}
-	
+
 	private static enum NeighbourhoodDistanceType {
-		SUM, DIFF;
+
+		SUM_POW {
+			@Override
+			public double createPartialDistanceSum(double firstValue,
+					double secondValue) {
+				return Math.pow(firstValue + secondValue, 2.0d);
+			}
+
+		},
+		DIFF_POW {
+			@Override
+			public double createPartialDistanceSum(double firstValue,
+					double secondValue) {
+				return Math.pow(firstValue - secondValue, 2.0d);
+			}
+		},
+		SUM_ABS {
+			@Override
+			public double createPartialDistanceSum(double firstValue,
+					double secondValue) {
+				return Math.abs(firstValue + secondValue);
+			}
+		},
+		DIFF_ABS {
+			@Override
+			public double createPartialDistanceSum(double firstValue,
+					double secondValue) {
+				return Math.abs(firstValue - secondValue);
+			}
+		};
+
+		public abstract double createPartialDistanceSum(double firstValue,
+				double secondValue);
 	}
 }

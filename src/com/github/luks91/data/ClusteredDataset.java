@@ -16,16 +16,20 @@
 
 package com.github.luks91.data;
 
+import java.util.List;
+
 public final class ClusteredDataset {
 
 	public static final int NON_CLUSTERED_VERTEX_CLUSTER_NUMBER = -1;
 	
 	private final double[][] mAdjacencyMatrix;
 	private final int[] mClusterNumber;
+	private final List<Integer>[] mClustersMapping;
 	
 	public ClusteredDataset(double[][] adjacencyMatrix, int[] clusteredNumber) {
 		mAdjacencyMatrix = adjacencyMatrix;
 		mClusterNumber = clusteredNumber;
+		mClustersMapping = null;
 	}
 	
 	public int size() {
@@ -37,10 +41,14 @@ public final class ClusteredDataset {
 	}
 	
 	public int getClustersAmount() {
-		return 0;
+		return mClustersMapping.length;
 	}
 	
 	public int getClusterIndex(int vertex) {
 		return mClusterNumber[vertex];
+	}
+	
+	public List<Integer> getAllVertexesForCluster(int clusterIndex) {
+		return mClustersMapping[clusterIndex];
 	}
 }
