@@ -20,7 +20,7 @@ import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
 
 class EdgePathDistanceCalculator implements INodesDistanceCalculable {
 
-	private static final double SIGMA = Double.MIN_VALUE;
+	private static final double SIGMA = Double.MAX_VALUE;
 	
 	@Override
 	public double calculate(double[][] adjacencyMatrix, int i, int j) {

@@ -16,6 +16,7 @@
 
 package com.github.luks91.util;
 
+import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
 
 public final class Centroid {
@@ -23,22 +24,47 @@ public final class Centroid {
 	private Centroid() {
 	}
 
-	public static int calculateCentroid(INodesDistanceCalculable distance,
-			double[][] adjacencyMatrix, int i) {
+	/**
+	 * 
+	 * This Method calculates centroid of given cluster (in case when
+	 * clusterIndex is given), or dataset (in case when clusterIndex is not
+	 * given).
+	 * 
+	 * @see IT MUST BE CHECKED IF RETURNED VALUE IS DIFFERENT than -1
+	 */
+	public static int calculateCentroid(ClusteredDataset clusteredDataset,
+			INodesDistanceCalculable nodesDistanceCalculator,
+			int... clusterIndex) {
 
 		double argMin = Double.MAX_VALUE;
 		double centroidDistanceSum;
 		int centroidIndex = -1;
-
-		for (int j = 0; j < adjacencyMatrix[i].length - 1; j++) {
-			centroidDistanceSum = 0;
-			for (int currIndex = j + 1; currIndex < adjacencyMatrix[i].length; currIndex++) {
-				centroidDistanceSum += distance.calculate(adjacencyMatrix,
-						currIndex, j);
-			}
-			if (centroidDistanceSum < argMin) {
-				argMin = centroidDistanceSum;
-				centroidIndex = j;
+		double[][] adjacencyMatrix = clusteredDataset.getAdjacencyMatrix();
+		boolean happendAtLeastOnce = false;
+		
+		for (int j = 0; j < adjacencyMatrix[0].length ; j++) {
+			//checking if we are looking in all clusters, or if vertex belongs to demanded cluster
+			if (clusterIndex.length == 0		
+					|| clusteredDataset.getClusterIndex(j) == clusterIndex[0]) {
+				centroidDistanceSum = 0;
+				
+				
+				for (int currIndex = 0 ; currIndex < adjacencyMatrix[0].length; currIndex++) {
+					if (clusterIndex.length == 0
+							|| clusteredDataset.getClusterIndex(currIndex) == clusterIndex[0]) {
+						double tmp = nodesDistanceCalculator
+						.calculate(adjacencyMatrix, currIndex, j);
+						centroidDistanceSum += tmp;
+						happendAtLeastOnce = true;			//to be sure that we have changed centroidDistanceSum
+					}
+				}
+				
+				
+				if (centroidDistanceSum < argMin && happendAtLeastOnce) {
+					argMin = centroidDistanceSum;
+					centroidIndex = j;
+					happendAtLeastOnce = false;
+				}
 			}
 		}
 

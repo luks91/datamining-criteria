@@ -33,7 +33,7 @@ public final class ClusteredDataset {
 	}
 	
 	public double[][] getAdjacencyMatrix() {
-		return null;
+		return mAdjacencyMatrix;
 	}
 	
 	public int getClustersAmount() {
