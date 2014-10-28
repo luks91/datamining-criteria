@@ -24,12 +24,13 @@ public final class ClusteredDataset {
 	
 	private final double[][] mAdjacencyMatrix;
 	private final int[] mClusterNumber;
-	private final List<Integer>[] mClustersMapping;
+	private final List<List<Integer>> mClustersMapping;
 	
-	public ClusteredDataset(double[][] adjacencyMatrix, int[] clusteredNumber) {
+	public ClusteredDataset(double[][] adjacencyMatrix, int[] clusteredNumber, 
+			List<List<Integer>> clustersMapping) {
 		mAdjacencyMatrix = adjacencyMatrix;
 		mClusterNumber = clusteredNumber;
-		mClustersMapping = null;
+		mClustersMapping = clustersMapping;
 	}
 	
 	public int size() {
@@ -41,7 +42,7 @@ public final class ClusteredDataset {
 	}
 	
 	public int getClustersAmount() {
-		return mClustersMapping.length;
+		return mClustersMapping.size();
 	}
 	
 	public int getClusterIndex(int vertex) {
@@ -49,6 +50,6 @@ public final class ClusteredDataset {
 	}
 	
 	public List<Integer> getAllVertexesForCluster(int clusterIndex) {
-		return mClustersMapping[clusterIndex];
+		return mClustersMapping.get(clusterIndex);
 	}
 }
