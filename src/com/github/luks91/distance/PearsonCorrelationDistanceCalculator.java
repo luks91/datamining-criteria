@@ -23,8 +23,8 @@ class PearsonCorrelationDistanceCalculator implements INodesDistanceCalculable {
 
 	@Override
 	public double calculate(double[][] adjacencyMatrix, int i, int j) {
-		return 1.0d - (1.0 * calculateUpperValue(adjacencyMatrix, i, j)
-				/ calculateLowerValue(adjacencyMatrix, i, j));
+		return 1.0d - calculateUpperValue(adjacencyMatrix, i, j)
+				/ calculateLowerValue(adjacencyMatrix, i, j);
 	}
 
 	private double calculateUpperValue(double[][] adjacencyMatrix, int i, int j) {
@@ -35,12 +35,12 @@ class PearsonCorrelationDistanceCalculator implements INodesDistanceCalculable {
 				adjacencyMatrix, i) / nodesAmount;
 		double jAverage = DistanceUtil.calculateNeighbourhoodWeightSum(
 				adjacencyMatrix, j) / nodesAmount;
-
+		
 		for (int currIndex = 0; currIndex < adjacencyMatrix[i].length; ++currIndex) {
 			upperValue += (adjacencyMatrix[i][currIndex] - iAverage)
 					* (adjacencyMatrix[j][currIndex] - jAverage);
 		}
-
+		
 		return upperValue;
 	}
 
