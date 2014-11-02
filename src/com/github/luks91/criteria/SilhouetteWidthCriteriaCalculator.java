@@ -23,7 +23,7 @@ import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
 
 /** SWC2 */
-class SilhouetteWidthCriterion implements ClusteringCriteriaCalculable {
+class SilhouetteWidthCriteriaCalculator implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
@@ -57,7 +57,7 @@ class SilhouetteWidthCriterion implements ClusteringCriteriaCalculable {
 			ClusteredDataset clusteredDataset, int clusterIndex, int i,
 			INodesDistanceCalculable nodesDistanceCalculator) {
 
-		double currentMaximum = Double.MAX_VALUE;
+		double currentMinimum = Double.MAX_VALUE;
 		for (int currentCluster = 0; currentCluster < clusteredDataset
 				.getClustersAmount(); ++currentCluster) {
 
@@ -68,11 +68,11 @@ class SilhouetteWidthCriterion implements ClusteringCriteriaCalculable {
 					clusteredDataset, i, currentCluster,
 					nodesDistanceCalculator);
 
-			if (currentMaximum > currentDistance)
-				currentMaximum = currentDistance;
+			if (currentMinimum > currentDistance)
+				currentMinimum = currentDistance;
 		}
 
-		return currentMaximum;
+		return currentMinimum;
 	}
 	
 	private double calculateDistanceToCluster(
@@ -87,11 +87,12 @@ class SilhouetteWidthCriterion implements ClusteringCriteriaCalculable {
 		double returnSum = 0.0d;
 
 		for (int j = 0; j < clusterSize; ++j) {
-			if (i == j)
+			int currentIndex = listOfClusterVertexes.get(j);
+			if (i == currentIndex)
 				continue;
 
 			returnSum += nodesDistanceCalculator.calculate(adjacencyMatrix, i,
-					j);
+					currentIndex);
 		}
 
 		return 1.0d / (clusterSize * returnSum);

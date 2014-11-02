@@ -51,7 +51,7 @@ public class JavaMLKNodeClustering implements IClustering {
 
 	private Dataset[] performKNodeClustering(Dataset rawData)
 			throws IOException {
-		Clusterer km = new KMeans(2, 2);
+		Clusterer km = new KMeans();
 		Dataset[] clusters = km.cluster(rawData);
 		return clusters;
 	}

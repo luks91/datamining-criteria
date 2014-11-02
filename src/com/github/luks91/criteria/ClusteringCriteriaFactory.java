@@ -17,8 +17,8 @@ public class ClusteringCriteriaFactory {
 		return new PBMCriteria();
 	}
 	
-	public static ClusteringCriteriaCalculable craeteSWC2CriteriaCalculator() {
-		return new SilhouetteWidthCriterion();
+	public static ClusteringCriteriaCalculable createSWC2CriteriaCalculator() {
+		return new SilhouetteWidthCriteriaCalculator();
 	}
 	
 	public static interface ClusteringCriteriaCalculable {
