@@ -30,7 +30,7 @@ public class Main {
 				"dataset/karate2.txt", 34);
 
 		ClusteringCriteriaCalculable criteriaCalculator = ClusteringCriteriaFactory
-				.createCIndexCriteriaCalculator();
+				.createDBCriteriaCalculator();
 		double criteria = criteriaCalculator
 				.calculateCriteria(clusteredDataset, NodesDistanceFactory
 						.createNeighbourOverlapDistanceCalculator());
