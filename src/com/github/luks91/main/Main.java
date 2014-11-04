@@ -17,7 +17,7 @@
 package com.github.luks91.main;
 
 import com.github.luks91.adapter.JavaMLClusteredDatasetAdapter;
-import com.github.luks91.clustering.JavaMLKNodeClustering;
+import com.github.luks91.clustering.JavaMLMarkovClustering;
 import com.github.luks91.criteria.ClusteringCriteriaFactory;
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
@@ -25,7 +25,7 @@ import com.github.luks91.distance.NodesDistanceFactory;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		ClusteredDataset clusteredDataset = new JavaMLKNodeClustering(
+		ClusteredDataset clusteredDataset = new JavaMLMarkovClustering(
 				new JavaMLClusteredDatasetAdapter()).performClustering(
 				"dataset/karate2.txt", 34);
 
@@ -34,7 +34,7 @@ public class Main {
 		double criteria = criteriaCalculator
 				.calculateCriteria(clusteredDataset, NodesDistanceFactory
 						.createNeighbourOverlapDistanceCalculator());
-
+		
 		System.out.println("Criteria: " + criteria);
 	}
 

@@ -18,21 +18,41 @@ package com.github.luks91.clustering;
 
 import java.io.IOException;
 
+import net.sf.javaml.clustering.Clusterer;
+import net.sf.javaml.clustering.SOM;
+import net.sf.javaml.core.Dataset;
+
+import com.github.luks91.adapter.IClusteredDatasetAdapter;
 import com.github.luks91.data.ClusteredDataset;
 
-public class CFinderCliquePercolationClustering implements IClustering {
+public class JavaMLSOMClustering extends JavaMLClusteringBase {
+
+	public JavaMLSOMClustering(
+			IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+		super(clusteringAdapter);
+	}
 
 	@Override
 	public ClusteredDataset performClustering(String filePath, int vertexAmount)
 			throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Dataset rawData = constructDataset(filePath, vertexAmount);
+		return mClusteringAdapter.translateDataset(
+				performDensityBasedSpatialClustering(rawData),
+				constructAdjacencyMatrix(rawData));
+	}
+
+	private Dataset[] performDensityBasedSpatialClustering(Dataset rawData)
+			throws IOException {
+
+		Clusterer km = new SOM();
+		Dataset[] clusters = km.cluster(rawData);
+		return clusters;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "JavaML Self Organizing Maps Clustering";
 	}
 
 }

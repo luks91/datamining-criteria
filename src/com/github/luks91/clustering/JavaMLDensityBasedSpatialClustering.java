@@ -19,15 +19,16 @@ package com.github.luks91.clustering;
 import java.io.IOException;
 
 import net.sf.javaml.clustering.Clusterer;
-import net.sf.javaml.clustering.KMeans;
+import net.sf.javaml.clustering.DensityBasedSpatialClustering;
 import net.sf.javaml.core.Dataset;
 
 import com.github.luks91.adapter.IClusteredDatasetAdapter;
 import com.github.luks91.data.ClusteredDataset;
 
-public class JavaMLKNodeClustering extends JavaMLClusteringBase {
+public class JavaMLDensityBasedSpatialClustering extends JavaMLClusteringBase {
 
-	public JavaMLKNodeClustering(IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+	public JavaMLDensityBasedSpatialClustering(
+			IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
 		super(clusteringAdapter);
 	}
 
@@ -36,21 +37,21 @@ public class JavaMLKNodeClustering extends JavaMLClusteringBase {
 			throws IOException {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
-
 		return mClusteringAdapter.translateDataset(
-				performKNodeClustering(rawData),
+				performDensityBasedSpatialClustering(rawData),
 				constructAdjacencyMatrix(rawData));
 	}
-	private Dataset[] performKNodeClustering(Dataset rawData)
+
+	private Dataset[] performDensityBasedSpatialClustering(Dataset rawData)
 			throws IOException {
-		Clusterer km = new KMeans();
+
+		Clusterer km = new DensityBasedSpatialClustering();
 		Dataset[] clusters = km.cluster(rawData);
 		return clusters;
 	}
 
 	@Override
 	public String getDescription() {
-		return "JavaML KNode Clustering";
+		return "JavaML Density Based Spatial Clustering";
 	}
-
 }

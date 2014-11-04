@@ -19,15 +19,17 @@ package com.github.luks91.clustering;
 import java.io.IOException;
 
 import net.sf.javaml.clustering.Clusterer;
-import net.sf.javaml.clustering.KMeans;
+import net.sf.javaml.clustering.mcl.MCL;
 import net.sf.javaml.core.Dataset;
+import net.sf.javaml.distance.JaccardIndexSimilarity;
 
 import com.github.luks91.adapter.IClusteredDatasetAdapter;
 import com.github.luks91.data.ClusteredDataset;
 
-public class JavaMLKNodeClustering extends JavaMLClusteringBase {
+public class JavaMLMarkovClustering extends JavaMLClusteringBase {
 
-	public JavaMLKNodeClustering(IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+	public JavaMLMarkovClustering(
+			IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
 		super(clusteringAdapter);
 	}
 
@@ -36,21 +38,21 @@ public class JavaMLKNodeClustering extends JavaMLClusteringBase {
 			throws IOException {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
-
 		return mClusteringAdapter.translateDataset(
-				performKNodeClustering(rawData),
+				performMarkovClustering(rawData),
 				constructAdjacencyMatrix(rawData));
 	}
-	private Dataset[] performKNodeClustering(Dataset rawData)
+
+	private Dataset[] performMarkovClustering(Dataset rawData)
 			throws IOException {
-		Clusterer km = new KMeans();
+
+		Clusterer km = new MCL(new JaccardIndexSimilarity());
 		Dataset[] clusters = km.cluster(rawData);
 		return clusters;
 	}
 
 	@Override
 	public String getDescription() {
-		return "JavaML KNode Clustering";
+		return "JavaML Self Organizing Maps Clustering";
 	}
-
 }

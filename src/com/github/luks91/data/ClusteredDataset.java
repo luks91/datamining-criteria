@@ -28,6 +28,7 @@ public final class ClusteredDataset {
 	
 	public ClusteredDataset(double[][] adjacencyMatrix, int[] clusteredNumber, 
 			List<List<Integer>> clustersMapping) {
+		
 		mAdjacencyMatrix = adjacencyMatrix;
 		mClusterNumber = clusteredNumber;
 		mClustersMapping = clustersMapping;
