@@ -22,14 +22,6 @@ public class ClusteringCriteriaFactoryTest extends TestCase {
 		assertTrue(createdCalculable instanceof ModularityCriteriaCalculator);
 	}
 	
-	public void testCreatePBMCriteriaCalculator() {
-		ClusteringCriteriaCalculable createdCalculable = 
-				ClusteringCriteriaFactory.createPBMCriteriaCalculator();
-		
-		assertNotNull(createdCalculable);
-		assertTrue(createdCalculable instanceof PBMCriteria);
-	}
-	
 	public void testCreateSWC2CriteriaCalculator() {
 		ClusteringCriteriaCalculable createdCalculable = 
 				ClusteringCriteriaFactory.createSWC2CriteriaCalculator();

@@ -18,7 +18,7 @@ package com.github.luks91.criteria;
 
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 import com.github.luks91.util.ArrayUtil;
 
 /**
@@ -34,7 +34,7 @@ class ModularityCriteriaCalculator implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator) {
+			NodesDistanceCalculable nodesDistanceCalculator) {
 
 		int datasetSize = clusteredDataset.size();
 
@@ -88,4 +88,8 @@ class ModularityCriteriaCalculator implements ClusteringCriteriaCalculable {
 		return iSum * jSum;
 	}
 
+	@Override
+	public String toString() {
+		return "Modularity Q Criteria Calculator";
+	}
 }

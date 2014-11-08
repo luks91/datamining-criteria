@@ -17,7 +17,7 @@ public class CentroidUtilTest extends TestCase {
 	private int[] clusteredNumber = { 1, 2, 2, 2, 1 };
 
 	private ClusteredDataset clusteredDataset = new ClusteredDataset(
-			adjacencyMatrix, clusteredNumber, null);
+			adjacencyMatrix, clusteredNumber);
 	
 	public static void Main(){
 		System.out.println( new CentroidUtilTest().calculateEdgeCentroid());

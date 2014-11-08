@@ -1,13 +1,13 @@
 package com.github.luks91.distance;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 import junit.framework.TestCase;
 
 public class NodesDistanceFactoryTest extends TestCase {
 	
 	public void testCreateAdjacencyRelationDistanceCalculator() {
-		INodesDistanceCalculable createdCalculator = 
+		NodesDistanceCalculable createdCalculator = 
 				NodesDistanceFactory.createAdjacencyRelationDistanceCalculator();
 		
 		assertNotNull(createdCalculator);
@@ -15,23 +15,15 @@ public class NodesDistanceFactoryTest extends TestCase {
 	}
 	
 	public void testCreateEdgePathDistanceCalculator() {
-		INodesDistanceCalculable createdCalculator = 
+		NodesDistanceCalculable createdCalculator = 
 				NodesDistanceFactory.createEdgePathDistanceCalculator();
 		
 		assertNotNull(createdCalculator);
 		assertTrue(createdCalculator instanceof EdgePathDistanceCalculator);
 	}
-
-	public void testCreateIClosenessDistanceCalculator() {
-		INodesDistanceCalculable createdCalculator = 
-				NodesDistanceFactory.createIClosenessDistanceCalculator();
-		
-		assertNotNull(createdCalculator);
-		assertTrue(createdCalculator instanceof IClosenessDistanceCalculator);
-	}
 	
 	public void testCreateNeighbourOverlapDistanceCalculator() {
-		INodesDistanceCalculable createdCalculator = 
+		NodesDistanceCalculable createdCalculator = 
 				NodesDistanceFactory.createNeighbourOverlapDistanceCalculator();
 		
 		assertNotNull(createdCalculator);
@@ -39,18 +31,10 @@ public class NodesDistanceFactoryTest extends TestCase {
 	}
 	
 	public void testCreatePearsonCorrelationDistanceCalculator() {
-		INodesDistanceCalculable createdCalculator = 
+		NodesDistanceCalculable createdCalculator = 
 				NodesDistanceFactory.createPearsonCorrelationDistanceCalculator();
 		
 		assertNotNull(createdCalculator);
 		assertTrue(createdCalculator instanceof PearsonCorrelationDistanceCalculator);
-	}
-	
-	public void testCreateShortestPathDistanceCalculator() {
-		INodesDistanceCalculable createdCalculator = 
-				NodesDistanceFactory.createShortestPathDistanceCalculator();
-		
-		assertNotNull(createdCalculator);
-		assertTrue(createdCalculator instanceof ShortestPathDistanceCalculator);
 	}
 }

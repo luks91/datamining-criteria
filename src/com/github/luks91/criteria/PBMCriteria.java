@@ -18,13 +18,13 @@ package com.github.luks91.criteria;
 
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 public class PBMCriteria implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator) {
+			NodesDistanceCalculable nodesDistanceCalculator) {
 
 		int clustersAmount = clusteredDataset.getClustersAmount();
 		double[] maxClustersIndexes = getClusterIndexesWithMaxCentroidDistances(
@@ -36,7 +36,7 @@ public class PBMCriteria implements ClusteringCriteriaCalculable {
 
 	private double[] getClusterIndexesWithMaxCentroidDistances(
 			ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator) {
+			NodesDistanceCalculable nodesDistanceCalculator) {
 
 		int maxValueCluster1 = 0, maxValueCluster2 = 0;
 		int clustersAmount = clusteredDataset.getClustersAmount();
@@ -63,7 +63,7 @@ public class PBMCriteria implements ClusteringCriteriaCalculable {
 	
 	private double calculateSumOfDistancesFromVertexesToTheirCentroids(
 			ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator) {
+			NodesDistanceCalculable nodesDistanceCalculator) {
 		
 		double totalSum = 0.0d;
 		int clustersAmount = clusteredDataset.getClustersAmount();
@@ -72,5 +72,10 @@ public class PBMCriteria implements ClusteringCriteriaCalculable {
 		}
 		
 		return totalSum;
+	}
+	
+	@Override
+	public String toString() {
+		return "PBM Criteria Calculator";
 	}
 }

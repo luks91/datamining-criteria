@@ -16,7 +16,10 @@
 
 package com.github.luks91.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class ClusteredDataset {
 
@@ -24,14 +27,23 @@ public final class ClusteredDataset {
 	
 	private final double[][] mAdjacencyMatrix;
 	private final int[] mClusterNumber;
-	private final List<List<Integer>> mClustersMapping;
+	private final Map<Integer, List<Integer>> mClustersMapping;
 	
-	public ClusteredDataset(double[][] adjacencyMatrix, int[] clusteredNumber, 
-			List<List<Integer>> clustersMapping) {
-		
+	public ClusteredDataset(double[][] adjacencyMatrix, int[] clusteredNumber) {
 		mAdjacencyMatrix = adjacencyMatrix;
 		mClusterNumber = clusteredNumber;
-		mClustersMapping = clustersMapping;
+		mClustersMapping = new HashMap<Integer, List<Integer>>();
+		
+		for (int i=0; i < clusteredNumber.length; ++i) {
+			int currentCluster = clusteredNumber[i];
+			
+			List<Integer> clusterContent = mClustersMapping.get(currentCluster);
+			if (clusterContent == null) {
+				clusterContent = new ArrayList<>();
+				mClustersMapping.put(currentCluster, clusterContent);
+			}
+			clusterContent.add(i);
+		}
 	}
 	
 	public int size() {

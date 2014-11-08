@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 import com.github.luks91.util.Centroid;
 
 class DaviesBouldinCriteriaCalculator implements
@@ -28,7 +28,7 @@ class DaviesBouldinCriteriaCalculator implements
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator) {
+			NodesDistanceCalculable nodesDistanceCalculator) {
 
 		double clustersAmount = 1.0d * clusteredDataset.getClustersAmount();
 		double[][] adjacencyMatrix = clusteredDataset.getAdjacencyMatrix();
@@ -62,7 +62,7 @@ class DaviesBouldinCriteriaCalculator implements
 	}
 
 	private double deL(int clusterIndex, ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable distanceCalculator) {
+			NodesDistanceCalculable distanceCalculator) {
 
 		double[][] adjacencyMatrix = clusteredDataset.getAdjacencyMatrix();
 		List<Integer> clusterVertexes = clusteredDataset
@@ -79,5 +79,10 @@ class DaviesBouldinCriteriaCalculator implements
 		}
 
 		return (1.0d / clusterCount) * totalSum;
+	}
+	
+	@Override
+	public String toString() {
+		return "Davies Bouldin Criteria Calculator";
 	}
 }

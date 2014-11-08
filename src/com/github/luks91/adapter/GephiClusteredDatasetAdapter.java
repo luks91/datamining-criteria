@@ -31,22 +31,18 @@ public class GephiClusteredDatasetAdapter implements
 	public ClusteredDataset translateDataset(Cluster[] initialDataset,
 			double[][] adjacencyMatrix) {
 
-		List<List<Integer>> clustersMapping = new ArrayList<List<Integer>>();
 		int[] clusteredNumber = new int[adjacencyMatrix.length];
 
 		for (int clusterIndex = 0; clusterIndex < initialDataset.length; clusterIndex++) {
-
 			Cluster currentCluster = initialDataset[clusterIndex];
-
+			
 			List<Integer> clusterVertexes = new ArrayList<Integer>();
 			for (Node clusterNode : currentCluster.getNodes()) {
 				clusterVertexes.add(clusterNode.getId());
 				clusteredNumber[clusterNode.getId()] = clusterIndex;
 			}
-			clustersMapping.add(clusterVertexes);
 		}
 
-		return new ClusteredDataset(adjacencyMatrix, clusteredNumber,
-				clustersMapping);
+		return new ClusteredDataset(adjacencyMatrix, clusteredNumber);
 	}
 }

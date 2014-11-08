@@ -16,10 +16,10 @@
 
 package com.github.luks91.distance;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 /** Verified */
-class PearsonCorrelationDistanceCalculator implements INodesDistanceCalculable {
+class PearsonCorrelationDistanceCalculator implements NodesDistanceCalculable {
 
 	@Override
 	public double calculate(double[][] adjacencyMatrix, int i, int j) {
@@ -62,5 +62,10 @@ class PearsonCorrelationDistanceCalculator implements INodesDistanceCalculable {
 		}
 
 		return Math.sqrt(partialSum / nodesAmount);
+	}
+	
+	@Override
+	public String toString() {
+		return "Pearson Correlation Distance Calculator";
 	}
 }

@@ -35,19 +35,8 @@ public abstract class GraphTestBase extends TestCase {
 				{ 0, 0, 1, 1, 1 },
 				{ 0, 0, 1, 1, 1 } };
 
-		List<List<Integer>> clustersMapping = new ArrayList<List<Integer>>();
-		ArrayList<Integer> firstCluster = new ArrayList<Integer>();
-		firstCluster.add(0);
-		firstCluster.add(1);
-		firstCluster.add(2);
-		clustersMapping.add(firstCluster);
-		ArrayList<Integer> secondCluster = new ArrayList<Integer>();
-		secondCluster.add(3);
-		secondCluster.add(4);
-		clustersMapping.add(secondCluster);
-
 		mClusteredDataset = new ClusteredDataset(adjacencyMatrix,
-				clusterNumber, clustersMapping);
+				clusterNumber);
 	}
 
 }

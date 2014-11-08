@@ -1,12 +1,12 @@
 package com.github.luks91.distance;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 public class PearsonCorrelationDistanceCalculatorTest extends DistanceCalculatorTestBase {
 
 
 	@Override
-	protected INodesDistanceCalculable getCalculator() {
+	protected NodesDistanceCalculable getCalculator() {
 		return new PearsonCorrelationDistanceCalculator();
 	}
 	

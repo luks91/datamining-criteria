@@ -17,7 +17,7 @@
 package com.github.luks91.util;
 
 import com.github.luks91.data.ClusteredDataset;
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 public final class Centroid {
 
@@ -33,7 +33,7 @@ public final class Centroid {
 	 * @see IT MUST BE CHECKED IF RETURNED VALUE IS DIFFERENT than -1
 	 */
 	public static int calculateCentroid(ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator,
+			NodesDistanceCalculable nodesDistanceCalculator,
 			int... clusterIndex) {
 
 		double argMin = Double.MAX_VALUE;

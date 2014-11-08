@@ -1,6 +1,6 @@
 package com.github.luks91.distance;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 import com.github.luks91.test.GraphTestBase;
 
 abstract class DistanceCalculatorTestBase extends GraphTestBase {
@@ -10,7 +10,7 @@ abstract class DistanceCalculatorTestBase extends GraphTestBase {
 	private int mFirstVertex, mSecondVertex;
 	private double mExpectedValue;
 	
-	protected abstract INodesDistanceCalculable getCalculator();
+	protected abstract NodesDistanceCalculable getCalculator();
 	
 	protected void whenValueIsCalculatedForVertexes(int firstVertex,
 			int secondVertex) {

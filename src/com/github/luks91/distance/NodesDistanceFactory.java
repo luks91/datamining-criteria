@@ -20,31 +20,23 @@ public final class NodesDistanceFactory {
 
 	private NodesDistanceFactory(){}
 	
-	public static INodesDistanceCalculable createAdjacencyRelationDistanceCalculator() {
+	public static NodesDistanceCalculable createAdjacencyRelationDistanceCalculator() {
 		return new AdjacencyRelationDistanceCalculator();
 	}
 	
-	public static INodesDistanceCalculable createEdgePathDistanceCalculator() {
+	public static NodesDistanceCalculable createEdgePathDistanceCalculator() {
 		return new EdgePathDistanceCalculator();
 	}
-
-	public static INodesDistanceCalculable createIClosenessDistanceCalculator() {
-		return new IClosenessDistanceCalculator();
-	}
 	
-	public static INodesDistanceCalculable createNeighbourOverlapDistanceCalculator() {
+	public static NodesDistanceCalculable createNeighbourOverlapDistanceCalculator() {
 		return new NeighbourOverlapDistanceCalculator();
 	}
 	
-	public static INodesDistanceCalculable createPearsonCorrelationDistanceCalculator() {
+	public static NodesDistanceCalculable createPearsonCorrelationDistanceCalculator() {
 		return new PearsonCorrelationDistanceCalculator();
 	}
 	
-	public static INodesDistanceCalculable createShortestPathDistanceCalculator() {
-		return new ShortestPathDistanceCalculator();
-	}
-	
-	public static interface INodesDistanceCalculable {
+	public static interface NodesDistanceCalculable {
 		public double calculate(double[][] adjacencyMatrix, int i, int j);
 	}
 }

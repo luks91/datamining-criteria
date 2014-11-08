@@ -17,7 +17,7 @@
 package com.github.luks91.criteria;
 
 import com.github.luks91.data.ClusteredDataset;
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 public class ClusteringCriteriaFactory {
 
@@ -27,10 +27,6 @@ public class ClusteringCriteriaFactory {
 	
 	public static ClusteringCriteriaCalculable createModularityCriteriaCalculator() {
 		return new ModularityCriteriaCalculator();
-	}
-	
-	public static ClusteringCriteriaCalculable createPBMCriteriaCalculator() {
-		return new PBMCriteria();
 	}
 	
 	public static ClusteringCriteriaCalculable createSWC2CriteriaCalculator() {
@@ -43,6 +39,6 @@ public class ClusteringCriteriaFactory {
 	
 	public static interface ClusteringCriteriaCalculable {
 		public double calculateCriteria(ClusteredDataset clusteredDataset, 
-				INodesDistanceCalculable nodesDistanceCalculator);
+				NodesDistanceCalculable nodesDistanceCalculator);
 	}
 }

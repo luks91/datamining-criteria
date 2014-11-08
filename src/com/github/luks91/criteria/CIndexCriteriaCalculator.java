@@ -20,13 +20,13 @@ import java.util.Arrays;
 
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 class CIndexCriteriaCalculator implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
-			INodesDistanceCalculable nodesDistanceCalculator) {
+			NodesDistanceCalculable nodesDistanceCalculator) {
 
 		int datasetSize = clusteredDataset.size();
 
@@ -62,5 +62,10 @@ class CIndexCriteriaCalculator implements ClusteringCriteriaCalculable {
 	private boolean verticesAreInTheSameClaster(ClusteredDataset dataset,
 			int i, int j) {
 		return dataset.getClusterIndex(i) == dataset.getClusterIndex(j);
+	}
+	
+	@Override
+	public String toString() {
+		return "C Index Criteria Calculator";
 	}
 }

@@ -16,10 +16,10 @@
 
 package com.github.luks91.distance;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 /** Verified */
-class EdgePathDistanceCalculator implements INodesDistanceCalculable {
+class EdgePathDistanceCalculator implements NodesDistanceCalculable {
 
 	private static final double SIGMA = Double.MAX_VALUE;
 	
@@ -29,5 +29,10 @@ class EdgePathDistanceCalculator implements INodesDistanceCalculable {
 			return 1.0d / SIGMA;
 		
 		return 1.0d / adjacencyMatrix[i][j];
+	}
+	
+	@Override
+	public String toString() {
+		return "Edge Path Distance Calculator";
 	}
 }

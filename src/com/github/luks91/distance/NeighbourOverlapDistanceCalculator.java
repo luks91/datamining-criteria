@@ -16,10 +16,10 @@
 
 package com.github.luks91.distance;
 
-import com.github.luks91.distance.NodesDistanceFactory.INodesDistanceCalculable;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
 /** Verified */
-class NeighbourOverlapDistanceCalculator implements INodesDistanceCalculable {
+class NeighbourOverlapDistanceCalculator implements NodesDistanceCalculable {
 
 	@Override
 	public double calculate(double[][] adjacencyMatrix, int i, int j) {
@@ -27,5 +27,10 @@ class NeighbourOverlapDistanceCalculator implements INodesDistanceCalculable {
 		double neighbourhoodDiff = DistanceUtil.calculateNeighbourhoodDistanceDiff(adjacencyMatrix, i, j);
 
 		return 1.0 - ((neighbourhoodSum - neighbourhoodDiff) / (neighbourhoodSum + neighbourhoodDiff));
+	}
+
+	@Override
+	public String toString() {
+		return "Neighbour Overlap Distance Calculator";
 	}
 }
