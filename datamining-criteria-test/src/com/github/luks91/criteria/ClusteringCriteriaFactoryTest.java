@@ -27,7 +27,7 @@ public class ClusteringCriteriaFactoryTest extends TestCase {
 				ClusteringCriteriaFactory.createSWC2CriteriaCalculator();
 		
 		assertNotNull(createdCalculable);
-		assertTrue(createdCalculable instanceof SilhouetteWidthCriteriaCalculatorTest);
+		assertTrue(createdCalculable instanceof SilhouetteWidthCriteriaCalculator);
 	}
 	
 	public void testCreateDBCriteriaCalculator() {

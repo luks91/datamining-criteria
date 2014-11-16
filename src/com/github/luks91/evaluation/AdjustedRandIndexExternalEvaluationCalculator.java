@@ -43,7 +43,7 @@ class AdjustedRandIndexExternalEvaluationCalculator extends
 		
 		double formulaMultParameter = (verticalSumsNewton * horizontalSumsNewton) /
 				calculateNewtonSymbol(verticesAmount, 2);
-		double formulaSumParameter = 0.5d * (verticalSumsNewton * horizontalSumsNewton);
+		double formulaSumParameter = 0.5d * (verticalSumsNewton + horizontalSumsNewton);
 		
 		return (totalSum - formulaMultParameter) 
 				/ (formulaSumParameter - formulaMultParameter);
@@ -98,7 +98,7 @@ class AdjustedRandIndexExternalEvaluationCalculator extends
 	
 	private double calculateNewtonSymbol(int n, int k) {
 		if (k > n)
-			return 0;
+			return 0.0d;
 		
 		return (double) factorial(n) / (double)(factorial(k) * factorial(n-k));
 	}

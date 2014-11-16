@@ -1,8 +1,5 @@
 package com.github.luks91.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.TestCase;
 
 import com.github.luks91.data.ClusteredDataset;
@@ -38,5 +35,4 @@ public abstract class GraphTestBase extends TestCase {
 		mClusteredDataset = new ClusteredDataset(adjacencyMatrix,
 				clusterNumber);
 	}
-
 }
