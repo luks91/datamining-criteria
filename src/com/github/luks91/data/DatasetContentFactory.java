@@ -19,8 +19,19 @@ package com.github.luks91.data;
 public final class DatasetContentFactory {
 	private DatasetContentFactory(){}
 	
-	public static IDatasetContent createZaharyWeightenedKarateDataset(String filePath) {
-		return new KarateDatasetContent(filePath);
+	public static IDatasetContent createZaharyWeightenedKarateDataset(String filePath,
+			String groundTruthFilePath) {
+		return new KarateDatasetContent(filePath, groundTruthFilePath);
+	}
+	
+	public static IDatasetContent createSawmillStrikeDataset(String filePath,
+			String groundTruthFilePath) {
+		return new SawmillStrikeDatasetContent(filePath, groundTruthFilePath);
+	}
+	
+	public static IDatasetContent createNCAAFootballDataset(String filePath,
+			String groundTruthFilePath) {
+		return new NCAAFootballDatasetContent(filePath, groundTruthFilePath);
 	}
 	
 	public static interface IDatasetContent {

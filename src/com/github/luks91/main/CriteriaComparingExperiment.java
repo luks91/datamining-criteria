@@ -40,65 +40,84 @@ class CriteriaComparingExperiment {
 	private final Random mRandomizer = new Random(); 
 	
 	public void perform() throws Exception {
-
 		List<ClusteringCriteriaCalculable> criteriaCalculators = allTheConsideredCriterias();
 		List<NodesDistanceCalculable> nodesDistanceCalculators = allTheDistanceCalculators();
 		
 		for (IDatasetContent datasetContent : consideredDatasets()) {
-			System.out.println("");
-			System.out.println("########### DATASET ###########");
-			System.out.println("########### "	 + datasetContent.toString() + " ############");
+			printCurrentDataset(datasetContent);
 			
 			List<ClusteredDataset> performedClusterings = allTheConsideredClusterings(datasetContent);
 			
 			for (ExternalEvaluationCalculable correlationCalculator : allTheExternalEvaluators()) {
 				System.out.println("For external evaluation: " + correlationCalculator.toString());
 				
-				double[] clusteringExternalEvaluations = new double[RANDOM_CLUSTERINGS_AMOUNT];
-
-				for (int i = 0; i < RANDOM_CLUSTERINGS_AMOUNT; ++i) {
-					ClusteredDataset currentClustering = performedClusterings.get(i);
-					// compute correlation
-					clusteringExternalEvaluations[i] = correlationCalculator
-							.calculateExternalEvaluation(currentClustering,
-									datasetContent.getGroundTruthDataset());
-				}
+				double[] clusteringExternalEvaluations = calculateClusteringExternalEvaluations(
+						performedClusterings, datasetContent, correlationCalculator);
 				
-				double[] criteriaScores = new double[criteriaCalculators.size() * nodesDistanceCalculators.size()];
-				int currentTestedCriteria = -1;
-				
-				//for all the considered criterias
 				for (ClusteringCriteriaCalculable criteria : criteriaCalculators) {
 					System.out.println("    For criteria : " + criteria.toString());
 					
-					//for all the considered nodes distance calculators
 					for (NodesDistanceCalculable nodesDistanceCalculator : nodesDistanceCalculators) {
-						
-						double[] criteriaValues = new double[performedClusterings.size()];
-						ClusteredDataset performedClustering = null;
-						
-						//for all the clustered datasets
-						for (int i=0; i < performedClusterings.size(); ++i) {
-							performedClustering = performedClusterings.get(i);
-							//calculate criteria value
-							criteriaValues[i] = criteria.calculateCriteria(performedClustering, nodesDistanceCalculator);
-						}
-						// compute correlation
-						criteriaScores[++currentTestedCriteria] = new SpearmansCorrelation().correlation(
-								criteriaValues, clusteringExternalEvaluations);
-						
-						System.out.println("        For distance: " + nodesDistanceCalculator.toString());
-						System.out.println("            Spearman correlation: " + new SpearmansCorrelation().correlation(
-								criteriaValues, clusteringExternalEvaluations));
-						System.out.println("            Pearson correlation: " + new PearsonsCorrelation().correlation(
-								criteriaValues, clusteringExternalEvaluations));
+						double[] criteriaValues = calculateCriteriaValues(performedClusterings, criteria, 
+								nodesDistanceCalculator);
+						printCriteriaCorrelations(nodesDistanceCalculator, criteriaValues, 
+								clusteringExternalEvaluations);
 					}
 				}
 			}
 		}
 	}
+	
+	private void printCurrentDataset(IDatasetContent datasetContent) {
+		System.out.println("");
+		System.out.println("########### DATASET ###########");
+		System.out.println("########### "	 + datasetContent.toString() + " ############");
+	}
+	
+	private double[] calculateClusteringExternalEvaluations(
+			List<ClusteredDataset> performedClusterings, IDatasetContent datasetContent, 
+			ExternalEvaluationCalculable correlationCalculator) throws Exception {
+		
+		double[] clusteringExternalEvaluations = new double[RANDOM_CLUSTERINGS_AMOUNT];
 
-	private List<ClusteredDataset> allTheConsideredClusterings(IDatasetContent datasetToCluster) throws Exception {
+		for (int i = 0; i < RANDOM_CLUSTERINGS_AMOUNT; ++i) {
+			clusteringExternalEvaluations[i] = correlationCalculator
+					.calculateExternalEvaluation(performedClusterings.get(i),
+							datasetContent.getGroundTruthDataset());
+		}
+		
+		return clusteringExternalEvaluations;
+	}
+	
+	private double[] calculateCriteriaValues(List<ClusteredDataset> performedClusterings,
+			ClusteringCriteriaCalculable criteria,
+			NodesDistanceCalculable nodesDistanceCalculator) {
+		
+		double[] criteriaValues = new double[performedClusterings.size()];
+		ClusteredDataset performedClustering = null;
+		
+		for (int i=0; i < performedClusterings.size(); ++i) {
+			performedClustering = performedClusterings.get(i);
+			criteriaValues[i] = criteria.calculateCriteria(performedClustering, 
+					nodesDistanceCalculator);
+		}
+		
+		return criteriaValues;
+	}
+
+	private void printCriteriaCorrelations(NodesDistanceCalculable nodesDistanceCalculator,
+			double[] criteriaValues, double[] clusteringExternalEvaluations) {
+		
+		System.out.println("        For distance: " + nodesDistanceCalculator.toString());
+		System.out.println("            Spearman correlation: " + new SpearmansCorrelation().correlation(
+				criteriaValues, clusteringExternalEvaluations));
+		System.out.println("            Pearson correlation: " + new PearsonsCorrelation().correlation(
+				criteriaValues, clusteringExternalEvaluations));
+	}
+	
+	private List<ClusteredDataset> allTheConsideredClusterings(IDatasetContent datasetToCluster) 
+			throws Exception {
+		
 		List<ClusteredDataset> returnList = new ArrayList<>();
 		ClusteredDataset groundTruthDataset = datasetToCluster.getGroundTruthDataset();
 		int verticesAmount = groundTruthDataset.size();
@@ -144,7 +163,12 @@ class CriteriaComparingExperiment {
 
 	private List<IDatasetContent> consideredDatasets() {
 		List<IDatasetContent> returnList = new ArrayList<>();
-		returnList.add(DatasetContentFactory.createZaharyWeightenedKarateDataset("dataset/karate.GraphML"));
+		returnList.add(DatasetContentFactory.createZaharyWeightenedKarateDataset("dataset/karate.GraphML", 
+				"dataset/karate.GroundTruth"));
+		returnList.add(DatasetContentFactory.createSawmillStrikeDataset("dataset/sawmill.Pairs", 
+				"dataset/sawmill.GroundTruth"));
+		returnList.add(DatasetContentFactory.createNCAAFootballDataset("dataset/ncaaFootball.Pairs", 
+				"dataset/ncaaFootball.GroundTruth"));
 		return returnList;
 	}
 }

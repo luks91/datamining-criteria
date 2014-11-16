@@ -18,24 +18,25 @@ package com.github.luks91.data;
 
 import com.github.luks91.util.DataUtil;
 
-class KarateDatasetContent extends AbstractDatasetContent {
-	
-	private static final int KARATE_DATASET_VERTICES_AMOUNT = 34;
-	
-	public KarateDatasetContent(String filePath, String groundTruthPath) {
-		super(filePath, groundTruthPath, KARATE_DATASET_VERTICES_AMOUNT);
+class NCAAFootballDatasetContent extends AbstractDatasetContent {
+
+	private static final int NCAA_FOOTBALL_VERTICES_AMOUNT = 180;
+
+	public NCAAFootballDatasetContent(String filePath, String groundTruthPath) {
+		super(filePath, groundTruthPath, NCAA_FOOTBALL_VERTICES_AMOUNT);
 	}
 	
 	@Override
 	public ClusteredDataset getGroundTruthDataset() throws Exception {
-		/* http://spaghetti-os.blogspot.com/2014/05/zacharys-karate-club.html */
-		return new ClusteredDataset(DataUtil.readAdjacencyMatrixFromGraphML(mDatasetFilePath), 
+		return new ClusteredDataset(
+				DataUtil.readAdjacencyMatrixFromPairsFile(mDatasetFilePath, 
+						NCAA_FOOTBALL_VERTICES_AMOUNT), 
 				DataUtil.readGroundTruthClustering(mGroundTruthFilePath, 
-						KARATE_DATASET_VERTICES_AMOUNT));
+						NCAA_FOOTBALL_VERTICES_AMOUNT));
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Zahary Karate Dataset - Weightened Undirected.";
+		return "NCAA Football Dataset - Unweightened Undirected.";
 	}
 }

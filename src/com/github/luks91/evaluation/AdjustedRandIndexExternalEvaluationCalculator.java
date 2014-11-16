@@ -20,8 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.math3.util.CombinatoricsUtils;
-
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.evaluation.ExternalEvaluationFactory.ExternalEvaluationCalculable;
 
