@@ -192,8 +192,8 @@ class CriteriaComparingExperiment {
 
 	private List<ExternalEvaluationCalculable> allTheExternalEvaluators() {
 		List<ExternalEvaluationCalculable> consideredExternalEvaluators = new ArrayList<>();
-		//consideredExternalEvaluators.add(ExternalEvaluationFactory.createAdjustedRandIndexCalculator());
 		consideredExternalEvaluators.add(ExternalEvaluationFactory.createJaccardCoefficientCalculator());
+		//consideredExternalEvaluators.add(ExternalEvaluationFactory.createAdjustedRandIndexCalculator());
 		return consideredExternalEvaluators;
 	}
 
