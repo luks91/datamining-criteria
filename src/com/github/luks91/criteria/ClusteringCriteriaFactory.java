@@ -37,6 +37,26 @@ public class ClusteringCriteriaFactory {
 		return new DaviesBouldinCriteriaCalculator();
 	}
 	
+	public static ClusteringCriteriaCalculable createVarianceRatioCriteriaCalculator() {
+		return new VarianceRatioCriteriaCalculator();
+	}
+	
+	public static ClusteringCriteriaCalculable createPointBiserialCriteriaCalculator() {
+		return new PointBiserialCriteriaCalculator();
+	}
+	
+	public static ClusteringCriteriaCalculable createZStatisticsCriteriaCalculator() {
+		return new ZStatisticsCriteriaCalculator();
+	}
+	
+	public static ClusteringCriteriaCalculable createDunnIndexCriteriaCalculator() {
+		return new DunnIndexCriteriaCalculator();
+	}
+	
+	public static ClusteringCriteriaCalculable createPBMCriteriaCalculator() {
+		return new PBMCriteria();
+	}
+	
 	public static interface ClusteringCriteriaCalculable {
 		public double calculateCriteria(ClusteredDataset clusteredDataset, 
 				NodesDistanceCalculable nodesDistanceCalculator);

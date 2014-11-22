@@ -16,10 +16,6 @@
 
 package com.github.luks91.evaluation;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.evaluation.ExternalEvaluationFactory.ExternalEvaluationCalculable;
 
@@ -48,41 +44,6 @@ class AdjustedRandIndexExternalEvaluationCalculator extends
 		return (totalSum - formulaMultParameter) 
 				/ (formulaSumParameter - formulaMultParameter);
 	}
-
-	private int[][] constructContigencyTable(ClusteredDataset obtainedClustering,
-			ClusteredDataset groundTruthClustering) {
-		
-		int obtainedClusteringClustersAmount = obtainedClustering.getClustersAmount();
-		int groundTruthClusteringClustersAmount = groundTruthClustering.getClustersAmount();
-		
-		int[][] contigencyTable = new int
-				[obtainedClusteringClustersAmount]
-						[groundTruthClusteringClustersAmount];
-
-		for (int i=0; i < obtainedClusteringClustersAmount; ++i) {
-			for (int j=0; j < groundTruthClusteringClustersAmount; ++j) {
-				contigencyTable[i][j] = getAmountOfObjectsInCommon(
-						obtainedClustering.getAllVertexesForCluster(i), 
-						groundTruthClustering.getAllVertexesForCluster(j));
-			}
-		}
-		
-		return contigencyTable;
-	}
-	
-	private int getAmountOfObjectsInCommon(List<Integer> firstClusterVertices,
-			List<Integer> secondClusterVertices) {
-		
-		int totalNumber = 0;
-		
-		Set<Integer> secondClusterVerticesSet = new HashSet<Integer>(secondClusterVertices);
-		for (int vertice : firstClusterVertices) {
-			if (secondClusterVerticesSet.contains(vertice))
-				totalNumber ++;
-		}
-		
-		return totalNumber;
-	}
 	
 	private double calculateTotalSum(int[][] contigencyTable) {
 		double totalSum = 0.0d;
@@ -94,20 +55,6 @@ class AdjustedRandIndexExternalEvaluationCalculator extends
 		}
 		
 		return totalSum;
-	}
-	
-	private double calculateNewtonSymbol(int n, int k) {
-		if (k > n)
-			return 0.0d;
-		
-		return (double) factorial(n) / (double)(factorial(k) * factorial(n-k));
-	}
-	
-	private long factorial(int i) {
-		if (i == 0)
-			return 1;
-		else
-			return i * factorial(i - 1);
 	}
 	
 	private double calculateVerticalSumsArgument(ContigencyTableSums sums) {

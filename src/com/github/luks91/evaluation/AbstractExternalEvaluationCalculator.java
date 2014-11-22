@@ -16,6 +16,10 @@
 
 package com.github.luks91.evaluation;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.github.luks91.data.ClusteredDataset;
 
 class AbstractExternalEvaluationCalculator {
@@ -58,6 +62,55 @@ class AbstractExternalEvaluationCalculator {
 		return dataset.getClusterIndex(i) == dataset.getClusterIndex(j);
 	}
 
+	protected int[][] constructContigencyTable(ClusteredDataset obtainedClustering,
+			ClusteredDataset groundTruthClustering) {
+		
+		int obtainedClusteringClustersAmount = obtainedClustering.getClustersAmount();
+		int groundTruthClusteringClustersAmount = groundTruthClustering.getClustersAmount();
+		
+		int[][] contigencyTable = new int
+				[obtainedClusteringClustersAmount]
+						[groundTruthClusteringClustersAmount];
+
+		for (int i=0; i < obtainedClusteringClustersAmount; ++i) {
+			for (int j=0; j < groundTruthClusteringClustersAmount; ++j) {
+				contigencyTable[i][j] = getAmountOfObjectsInCommon(
+						obtainedClustering.getAllVertexesForCluster(i), 
+						groundTruthClustering.getAllVertexesForCluster(j));
+			}
+		}
+		
+		return contigencyTable;
+	}
+	
+	private int getAmountOfObjectsInCommon(List<Integer> firstClusterVertices,
+			List<Integer> secondClusterVertices) {
+		
+		int totalNumber = 0;
+		
+		Set<Integer> secondClusterVerticesSet = new HashSet<Integer>(secondClusterVertices);
+		for (int vertice : firstClusterVertices) {
+			if (secondClusterVerticesSet.contains(vertice))
+				totalNumber ++;
+		}
+		
+		return totalNumber;
+	}
+	
+	protected double calculateNewtonSymbol(int n, int k) {
+		if (k > n)
+			return 0.0d;
+		
+		return (double) factorial(n) / (double)(factorial(k) * factorial(n-k));
+	}
+	
+	protected final long factorial(int i) {
+		if (i == 0)
+			return 1;
+		else
+			return i * factorial(i - 1);
+	}
+	
 	protected static final class FormulaParameters {
 		private int mAmountOfPairsInBothClusters;
 		private int mAmountOfPairsInNoneClusters;

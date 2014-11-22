@@ -19,59 +19,66 @@ package com.github.luks91.criteria;
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
+import com.github.luks91.util.Centroid;
 
-public class PBMCriteria implements ClusteringCriteriaCalculable {
+class PBMCriteria implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,
 			NodesDistanceCalculable nodesDistanceCalculator) {
 
-		int clustersAmount = clusteredDataset.getClustersAmount();
-		double[] maxClustersIndexes = getClusterIndexesWithMaxCentroidDistances(
+		
+		double clustersAmount = (double) clusteredDataset.getClustersAmount();
+		double maximumCentroidsDistance = calculateMaximumDistanceBetweenCentroids(
 				clusteredDataset, nodesDistanceCalculator);
-
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	private double[] getClusterIndexesWithMaxCentroidDistances(
-			ClusteredDataset clusteredDataset,
-			NodesDistanceCalculable nodesDistanceCalculator) {
-
-		int maxValueCluster1 = 0, maxValueCluster2 = 0;
-		int clustersAmount = clusteredDataset.getClustersAmount();
-		double maximumDistanceValue = Double.MIN_VALUE;
-
-		for (int firstCluster = 0; firstCluster < clustersAmount - 1; ++firstCluster) {
-			for (int secondCluster = firstCluster + 1; secondCluster < clustersAmount; 
-					++secondCluster) {
-				
-				double currentDistance = 0.0d; // TODO: calculate distance to
-											   // centroids
-
-				if (maximumDistanceValue < currentDistance) {
-					maximumDistanceValue = currentDistance;
-					maxValueCluster1 = firstCluster;
-					maxValueCluster2 = secondCluster;
-				}
-			}
-		}
-
-		throw new UnsupportedOperationException("Not implemented."); //TODO: implemnted
-		//return new double[] { 1.0d * maxValueCluster1, 1.0d * maxValueCluster2 };
+		double toCentroidsDistancesSum = calculateToCentroidsDistanceSum(
+				clusteredDataset, nodesDistanceCalculator);
+		
+		return (1.0d / clustersAmount) * 
+				(maximumCentroidsDistance / toCentroidsDistancesSum);
 	}
 	
-	private double calculateSumOfDistancesFromVertexesToTheirCentroids(
-			ClusteredDataset clusteredDataset,
+	private double calculateMaximumDistanceBetweenCentroids(ClusteredDataset clusteredDataset,
 			NodesDistanceCalculable nodesDistanceCalculator) {
 		
-		double totalSum = 0.0d;
+		double maxDistance = Double.MIN_VALUE;
+		int clustersCount = clusteredDataset.getClustersAmount();
+		for (int cluster1 = 0; cluster1 < clustersCount; ++cluster1) {
+			for (int cluster2 = 0; cluster2 < clustersCount; ++cluster2) {
+
+				int cluster1Centroid = Centroid.calculateCentroid(clusteredDataset, 
+						nodesDistanceCalculator, cluster1);
+				int cluster2Centroid = Centroid.calculateCentroid(clusteredDataset, 
+						nodesDistanceCalculator, cluster2);
+				
+				double currentDistance = nodesDistanceCalculator.calculate(
+						clusteredDataset.getAdjacencyMatrix(), cluster1Centroid, 
+						cluster2Centroid);
+				
+				if (currentDistance > maxDistance)
+					maxDistance = currentDistance;
+			}
+		}
+		return maxDistance;
+	}
+	
+	private double calculateToCentroidsDistanceSum(ClusteredDataset clusteredDataset,
+			NodesDistanceCalculable nodesDistanceCalculator) {
+		
+		double returnSum = 0.0d;
 		int clustersAmount = clusteredDataset.getClustersAmount();
 		for (int currentCluster = 0; currentCluster < clustersAmount; ++currentCluster) {
-			//TODO: implement
+			
+			int clusterCentroid = Centroid.calculateCentroid(clusteredDataset, 
+					nodesDistanceCalculator, currentCluster);
+			
+			for (int i : clusteredDataset.getAllVertexesForCluster(currentCluster)) {
+				returnSum += nodesDistanceCalculator.calculate(clusteredDataset.getAdjacencyMatrix(), 
+						clusterCentroid, i);
+			}
 		}
 		
-		return totalSum;
+		return returnSum;
 	}
 	
 	@Override
