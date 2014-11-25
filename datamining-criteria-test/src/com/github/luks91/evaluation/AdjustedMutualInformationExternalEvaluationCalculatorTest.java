@@ -25,7 +25,7 @@ public class AdjustedMutualInformationExternalEvaluationCalculatorTest
 	}
 	
 	private void thenReceivedResultEqualsToTheExpected() {
-		assertEquals(0.16666666d, mCalculatedEvaluationValue, 
+		assertEquals(1.4568554777d, mCalculatedEvaluationValue, 
 				0.0000001d);
 	}
 	

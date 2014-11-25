@@ -39,14 +39,15 @@ class ModularityCriteriaCalculator implements ClusteringCriteriaCalculable {
 		int datasetSize = clusteredDataset.size();
 
 		double[][] adjacencyMatrix = clusteredDataset.getAdjacencyMatrix();
-		double[] clustersSums = new double[clusteredDataset.getClustersAmount()];
+		double[] clustersSums = new double[clusteredDataset.getClustersAmount() + 1];
 		double E = calculateE(adjacencyMatrix, datasetSize);
 
 		for (int i = 0; i < datasetSize - 1; ++i) {
 			for (int j = i + 1; j < datasetSize; ++j) {
 				if (verticesAreInTheSameClaster(clusteredDataset, i, j)) {
 					int clusterNumber = clusteredDataset.getClusterIndex(i);
-					clustersSums[clusterNumber] += adjacencyMatrix[i][j]
+					double adjacencyValue = adjacencyMatrix[i][j];
+					clustersSums[clusterNumber] += adjacencyValue
 							- (calculateMultSums(adjacencyMatrix, i, j,
 									datasetSize, clusteredDataset) / (2.0d * E));
 				}

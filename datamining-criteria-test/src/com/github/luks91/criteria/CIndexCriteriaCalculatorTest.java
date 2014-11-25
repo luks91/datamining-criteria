@@ -11,8 +11,6 @@ public class CIndexCriteriaCalculatorTest extends ClusteringCriteriaCalculableTe
 	}
 
 	public void testWith5VertexesGraph() {
-		fail("Not implemented");
-		
 		whenGraphWith5VertexesIsClustered();
 		whenDistanceCalculatorIs(NodesDistanceFactory
 				.createNeighbourOverlapDistanceCalculator());

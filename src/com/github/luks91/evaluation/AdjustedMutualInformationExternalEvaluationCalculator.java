@@ -126,8 +126,8 @@ class AdjustedMutualInformationExternalEvaluationCalculator extends
 			int[][] contigencyTable) {
 		
 		int verticesCount = obtainedClustering.size();
-		int ai = calculateExpectedMIai(obtainedClustering, i, contigencyTable);
-		int bj = calculateExpectedMIbj(groundTruthClustering, j, contigencyTable);
+		int ai = calculateExpectedMIai(groundTruthClustering, i, contigencyTable);
+		int bj = calculateExpectedMIbj(obtainedClustering, j, contigencyTable);
 		int nij = calculateExpectedMInij(ai, bj, verticesCount);
 		
 		double totalSum = 0.0d;
@@ -142,22 +142,22 @@ class AdjustedMutualInformationExternalEvaluationCalculator extends
 		return totalSum;
 	}
 	
-	private int calculateExpectedMIai(ClusteredDataset obtainedClustering,
+	private int calculateExpectedMIai(ClusteredDataset groundTruthClustering,
 			int i, int[][] contigencyTable) {
 		
 		int totalSum = 0;
-		for (int j=0; j < obtainedClustering.getClustersAmount(); ++j) {
+		for (int j=0; j < groundTruthClustering.getClustersAmount(); ++j) {
 			totalSum += contigencyTable[i][j];
 		}
 		
 		return totalSum;
 	}
 	
-	private int calculateExpectedMIbj(ClusteredDataset groundTruthClustering, 
+	private int calculateExpectedMIbj(ClusteredDataset obtainedClustering, 
 			int j, int[][] contigencyTable) {
 
 		int totalSum = 0;
-		for (int i=0; i < groundTruthClustering.getClustersAmount(); ++i) {
+		for (int i=0; i < obtainedClustering.getClustersAmount(); ++i) {
 			totalSum += contigencyTable[i][j];
 		}
 		
@@ -178,5 +178,10 @@ class AdjustedMutualInformationExternalEvaluationCalculator extends
 				* factorial(N - ai - bj + nij);
 		
 		return upperValue / lowerValue;
+	}
+	
+	@Override
+	public String toString() {
+		return "[AMI] Adjusted Mutual Information External Evaluation";
 	}
 }

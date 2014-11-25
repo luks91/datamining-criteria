@@ -11,8 +11,6 @@ public class DaviesBouldinCriteriaCalculatorTest extends ClusteringCriteriaCalcu
 	}
 	
 	public void testWith5VertexesGraph() {
-		fail("Not implemented");
-		
 		whenGraphWith5VertexesIsClustered();
 		whenDistanceCalculatorIs(NodesDistanceFactory
 				.createNeighbourOverlapDistanceCalculator());

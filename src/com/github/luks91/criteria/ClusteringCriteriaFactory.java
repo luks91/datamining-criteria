@@ -54,7 +54,7 @@ public class ClusteringCriteriaFactory {
 	}
 	
 	public static ClusteringCriteriaCalculable createPBMCriteriaCalculator() {
-		return new PBMCriteria();
+		return new PBMCriteriaCalculator();
 	}
 	
 	public static interface ClusteringCriteriaCalculable {

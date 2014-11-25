@@ -30,6 +30,10 @@ public final class ExternalEvaluationFactory {
 		return new JaccardCoefficientExternalEvaluationCalculator();
 	}
 
+	public static ExternalEvaluationCalculable createAdjustedMutualInformationCalculator() {
+		return new AdjustedMutualInformationExternalEvaluationCalculator();
+	}
+	
 	public static interface ExternalEvaluationCalculable {
 		public double calculateExternalEvaluation(
 				ClusteredDataset obtainedClustering,

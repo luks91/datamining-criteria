@@ -18,7 +18,9 @@ package com.github.luks91.main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
@@ -49,21 +51,25 @@ class CriteriaComparingExperiment {
 			
 			List<ClusteredDataset> performedClusterings = allTheConsideredClusterings(datasetContent);
 			
-			for (ExternalEvaluationCalculable correlationCalculator : allTheExternalEvaluators()) {
+			Map<String, double[]> externalEvaluations = new HashMap<String, double[]>();
+			
+			for (ExternalEvaluationCalculable externalEvaluationCalculator : allTheExternalEvaluators()) {
 				double[] clusteringExternalEvaluations = calculateClusteringExternalEvaluations(
-						performedClusterings, datasetContent, correlationCalculator);
+						performedClusterings, datasetContent, externalEvaluationCalculator);
 
-				printExternalEvaluationCalculator(correlationCalculator, clusteringExternalEvaluations);
-				
-				for (ClusteringCriteriaCalculable criteria : criteriaCalculators) {
-					System.out.println("    For criteria : " + criteria.toString());
-					
-					for (NodesDistanceCalculable nodesDistanceCalculator : nodesDistanceCalculators) {
-						double[] criteriaValues = calculateCriteriaValues(performedClusterings, criteria, 
-								nodesDistanceCalculator);
-						printCriteriaCorrelations(nodesDistanceCalculator, criteriaValues, 
-								clusteringExternalEvaluations);
-					}
+				printExternalEvaluationCalculator(externalEvaluationCalculator, clusteringExternalEvaluations);
+				externalEvaluations.put(externalEvaluationCalculator.toString(), clusteringExternalEvaluations);
+			}
+			
+			for (ClusteringCriteriaCalculable criteria : criteriaCalculators) {
+				System.out.println("    For criteria : " + criteria.toString());
+
+				for (NodesDistanceCalculable nodesDistanceCalculator : nodesDistanceCalculators) {
+					double[] criteriaValues = calculateCriteriaValues(
+							performedClusterings, criteria,
+							nodesDistanceCalculator);
+					printCriteriaCorrelations(nodesDistanceCalculator,
+							criteriaValues, externalEvaluations);
 				}
 			}
 		}
@@ -72,10 +78,10 @@ class CriteriaComparingExperiment {
 	private void printExternalEvaluationCalculator(ExternalEvaluationCalculable correlationCalculator,
 			double[] clusteringExternalEvaluations) {
 		
-		System.out.println("For external evaluation: " + correlationCalculator.toString());
-		System.out.println("With values: " 
-				+ Arrays.toString(clusteringExternalEvaluations));
+		System.out.println("External evaluation: " + correlationCalculator.toString());
+		System.out.println("With values: " + Arrays.toString(clusteringExternalEvaluations));
 		System.out.println("With average: " + calculateAverage(clusteringExternalEvaluations));
+		System.out.println("");
 	}
 	
 	private double calculateAverage(double[] values) { 
@@ -125,23 +131,28 @@ class CriteriaComparingExperiment {
 	}
 
 	private void printCriteriaCorrelations(NodesDistanceCalculable nodesDistanceCalculator,
-			double[] criteriaValues, double[] clusteringExternalEvaluations) {
+			double[] criteriaValues, Map<String, double[]> clusteringExternalEvaluations) {
 		
 		System.out.println("        For distance: " + nodesDistanceCalculator.toString());
 		System.out.println("            With values: " + Arrays.toString(criteriaValues));
 		
-		try {
-			System.out.println("            Spearman correlation: " + new SpearmansCorrelation().correlation(
-				criteriaValues, clusteringExternalEvaluations));
-		} catch (Exception e) {
-			System.out.println("            Spearman correlation: Could not be resolved");
-		}
-		
-		try {
-			System.out.println("            Pearson correlation: " + new PearsonsCorrelation().correlation(
-				criteriaValues, clusteringExternalEvaluations));
-		} catch (Exception e) {
-			System.out.println("            Pearson correlation: Could not be resolved");
+		for (Map.Entry<String, double[]> externalEvaluation : clusteringExternalEvaluations.entrySet()) {
+			
+			System.out.println("            Calculating correlation with: " + externalEvaluation.getKey());
+			
+			try {
+				System.out.println("                Spearman correlation: " + new SpearmansCorrelation().correlation(
+					criteriaValues, externalEvaluation.getValue()));
+			} catch (Exception e) {
+				System.out.println("                Spearman correlation: Could not be resolved");
+			}
+			
+			try {
+				System.out.println("                Pearson correlation: " + new PearsonsCorrelation().correlation(
+					criteriaValues, externalEvaluation.getValue()));
+			} catch (Exception e) {
+				System.out.println("                Pearson correlation: Could not be resolved");
+			}
 		}
 	}
 	
@@ -153,12 +164,16 @@ class CriteriaComparingExperiment {
 		int verticesAmount = groundTruthDataset.size();
 
 		for (int currentDataset = 0; currentDataset < RANDOM_CLUSTERINGS_AMOUNT; ++currentDataset) {
-			int clustersAmount = mRandomizer.nextInt(5) + 2;
+			int clustersAmount = 2; //mRandomizer.nextInt(5) + 2;
 
 			int[] verticesToClusters = new int[verticesAmount];
 			for (int i = 0; i < verticesAmount; ++i) {
-				verticesToClusters[i] = mRandomizer.nextInt(clustersAmount);
-
+				
+				if (i % 17 == 0){ 
+					verticesToClusters[i] = mRandomizer.nextInt(clustersAmount);
+				} else {
+					verticesToClusters[i] = groundTruthDataset.getClusterIndex(i);
+				}
 			}
 			returnList.add(new ClusteredDataset(groundTruthDataset.getAdjacencyMatrix(), 
 					verticesToClusters));
@@ -177,7 +192,7 @@ class CriteriaComparingExperiment {
 		consideredCriterias.add(ClusteringCriteriaFactory.createPBMCriteriaCalculator());
 		consideredCriterias.add(ClusteringCriteriaFactory.createDunnIndexCriteriaCalculator());
 		consideredCriterias.add(ClusteringCriteriaFactory.createZStatisticsCriteriaCalculator());
-		consideredCriterias.add(ClusteringCriteriaFactory.createPointBiserialCriteriaCalculator());
+		//consideredCriterias.add(ClusteringCriteriaFactory.createPointBiserialCriteriaCalculator());
 		return consideredCriterias;
 	}
 	
@@ -194,6 +209,7 @@ class CriteriaComparingExperiment {
 		List<ExternalEvaluationCalculable> consideredExternalEvaluators = new ArrayList<>();
 		consideredExternalEvaluators.add(ExternalEvaluationFactory.createJaccardCoefficientCalculator());
 		//consideredExternalEvaluators.add(ExternalEvaluationFactory.createAdjustedRandIndexCalculator());
+		//consideredExternalEvaluators.add(ExternalEvaluationFactory.createAdjustedMutualInformationCalculator());
 		return consideredExternalEvaluators;
 	}
 
@@ -201,10 +217,10 @@ class CriteriaComparingExperiment {
 		List<IDatasetContent> returnList = new ArrayList<>();
 		returnList.add(DatasetContentFactory.createZaharyWeightenedKarateDataset("dataset/karate.GraphML", 
 				"dataset/karate.GroundTruth"));
-		returnList.add(DatasetContentFactory.createSawmillStrikeDataset("dataset/sawmill.Pairs", 
-				"dataset/sawmill.GroundTruth"));
-		returnList.add(DatasetContentFactory.createNCAAFootballDataset("dataset/ncaaFootball.Pairs", 
-				"dataset/ncaaFootball.GroundTruth"));
+		//returnList.add(DatasetContentFactory.createSawmillStrikeDataset("dataset/sawmill.Pairs", 
+		//		"dataset/sawmill.GroundTruth"));
+		//returnList.add(DatasetContentFactory.createNCAAFootballDataset("dataset/ncaaFootball.Pairs", 
+		//		"dataset/ncaaFootball.GroundTruth"));
 		return returnList;
 	}
 }

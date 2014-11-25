@@ -3,19 +3,18 @@ package com.github.luks91.criteria;
 import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.distance.NodesDistanceFactory;
 
-public class SilhouetteWidthCriteriaCalculatorTest extends
-		ClusteringCriteriaCalculableTestBase {
-
+public class VarianceRatioCriteriaCalculatorTest extends ClusteringCriteriaCalculableTestBase {
+	
 	@Override
 	protected ClusteringCriteriaCalculable getCalculator() {
-		return new SilhouetteWidthCriteriaCalculator();
+		return new VarianceRatioCriteriaCalculator();
 	}
 
 	public void testWith5VertexesGraph() {
 		whenGraphWith5VertexesIsClustered();
 		whenDistanceCalculatorIs(NodesDistanceFactory
 				.createNeighbourOverlapDistanceCalculator());
-		whenExpectedValueIs(0.0d);
+		whenExpectedValueIs(8.999999999999998);
 		thenCalculatedCriteriaReturnsProperValue();
 	}
 }

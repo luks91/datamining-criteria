@@ -21,7 +21,7 @@ import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 import com.github.luks91.util.Centroid;
 
-class PBMCriteria implements ClusteringCriteriaCalculable {
+class PBMCriteriaCalculator implements ClusteringCriteriaCalculable {
 
 	@Override
 	public double calculateCriteria(ClusteredDataset clusteredDataset,

@@ -16,9 +16,6 @@
 
 package com.github.luks91.main;
 
-import com.github.luks91.util.DataUtil;
-
-
 public class Main {
 	public static void main(String[] args) throws Exception {
 		new CriteriaComparingExperiment().perform();
