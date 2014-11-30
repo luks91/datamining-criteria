@@ -27,7 +27,7 @@ class NCAAFootballDatasetContent extends AbstractDatasetContent {
 	}
 	
 	@Override
-	public ClusteredDataset getGroundTruthDataset() throws Exception {
+	protected ClusteredDataset createGroundTruthDataset() throws Exception {
 		return new ClusteredDataset(
 				DataUtil.readAdjacencyMatrixFromPairsFile(mDatasetFilePath, 
 						NCAA_FOOTBALL_VERTICES_AMOUNT), 

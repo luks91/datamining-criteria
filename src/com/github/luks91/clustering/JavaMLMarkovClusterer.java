@@ -19,16 +19,17 @@ package com.github.luks91.clustering;
 import java.io.IOException;
 
 import net.sf.javaml.clustering.Clusterer;
-import net.sf.javaml.clustering.DensityBasedSpatialClustering;
+import net.sf.javaml.clustering.mcl.MCL;
 import net.sf.javaml.core.Dataset;
+import net.sf.javaml.distance.JaccardIndexSimilarity;
 
-import com.github.luks91.adapter.IClusteredDatasetAdapter;
 import com.github.luks91.data.ClusteredDataset;
+import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
 
-public class JavaMLDensityBasedSpatialClustering extends JavaMLClusteringBase {
+class JavaMLMarkovClusterer extends AbstractJavaMLClusterer {
 
-	public JavaMLDensityBasedSpatialClustering(
-			IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+	public JavaMLMarkovClusterer(
+			ClusteredDatasetAdaptable<Dataset[]> clusteringAdapter) {
 		super(clusteringAdapter);
 	}
 
@@ -37,21 +38,21 @@ public class JavaMLDensityBasedSpatialClustering extends JavaMLClusteringBase {
 			throws IOException {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
-		return mClusteringAdapter.translateDataset(
-				performDensityBasedSpatialClustering(rawData),
+		return mClusteringAdapter.adapt(
+				performMarkovClustering(rawData),
 				constructAdjacencyMatrix(rawData));
 	}
 
-	private Dataset[] performDensityBasedSpatialClustering(Dataset rawData)
+	private Dataset[] performMarkovClustering(Dataset rawData)
 			throws IOException {
 
-		Clusterer km = new DensityBasedSpatialClustering();
+		Clusterer km = new MCL(new JaccardIndexSimilarity());
 		Dataset[] clusters = km.cluster(rawData);
 		return clusters;
 	}
 
 	@Override
 	public String getDescription() {
-		return "JavaML Density Based Spatial Clustering";
+		return "JavaML Self Organizing Maps Clustering";
 	}
 }

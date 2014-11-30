@@ -25,6 +25,7 @@ abstract class AbstractDatasetContent implements IDatasetContent {
 	
 	protected final String mDatasetFilePath;
 	protected final String mGroundTruthFilePath;
+	private ClusteredDataset mGroundTruthDataset;
 
 	public AbstractDatasetContent(String filePath, String groundTruthPath, 
 			int verticesAmount) {
@@ -33,6 +34,17 @@ abstract class AbstractDatasetContent implements IDatasetContent {
 		mGroundTruthFilePath = groundTruthPath;
 		mVerticesAmount = verticesAmount;
 	}
+	
+	@Override
+	public ClusteredDataset getGroundTruthDataset() throws Exception {
+		if (mGroundTruthDataset != null)
+			return mGroundTruthDataset;
+		
+		mGroundTruthDataset = createGroundTruthDataset();
+		return mGroundTruthDataset;
+	}
+	
+	protected abstract ClusteredDataset createGroundTruthDataset() throws Exception;
 	
 	abstract String getDescription();
 	

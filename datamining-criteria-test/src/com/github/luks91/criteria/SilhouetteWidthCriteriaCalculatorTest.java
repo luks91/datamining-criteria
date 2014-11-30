@@ -15,7 +15,7 @@ public class SilhouetteWidthCriteriaCalculatorTest extends
 		whenGraphWith5VertexesIsClustered();
 		whenDistanceCalculatorIs(NodesDistanceFactory
 				.createNeighbourOverlapDistanceCalculator());
-		whenExpectedValueIs(0.0d);
+		whenExpectedValueIs(0.2d);
 		thenCalculatedCriteriaReturnsProperValue();
 	}
 }

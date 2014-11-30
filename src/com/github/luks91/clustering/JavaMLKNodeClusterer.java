@@ -22,12 +22,12 @@ import net.sf.javaml.clustering.Clusterer;
 import net.sf.javaml.clustering.KMeans;
 import net.sf.javaml.core.Dataset;
 
-import com.github.luks91.adapter.IClusteredDatasetAdapter;
 import com.github.luks91.data.ClusteredDataset;
+import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
 
-public class JavaMLKNodeClustering extends JavaMLClusteringBase {
+public class JavaMLKNodeClusterer extends AbstractJavaMLClusterer {
 
-	public JavaMLKNodeClustering(IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+	public JavaMLKNodeClusterer(ClusteredDatasetAdaptable<Dataset[]> clusteringAdapter) {
 		super(clusteringAdapter);
 	}
 
@@ -37,7 +37,7 @@ public class JavaMLKNodeClustering extends JavaMLClusteringBase {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
 
-		return mClusteringAdapter.translateDataset(
+		return mClusteringAdapter.adapt(
 				performKNodeClustering(rawData),
 				constructAdjacencyMatrix(rawData));
 	}

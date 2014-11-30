@@ -46,7 +46,7 @@ class SilhouetteWidthCriteriaCalculator implements ClusteringCriteriaCalculable 
 				double lowerValue = Math.max(minimumDistanceToOtherCluster,
 						distanceToCurrentCluster);
 
-				returnSum += upperValue / lowerValue;
+				returnSum += lowerValue != 0 ? upperValue / lowerValue : 0;
 			}
 		}
 		
@@ -82,20 +82,17 @@ class SilhouetteWidthCriteriaCalculator implements ClusteringCriteriaCalculable 
 		List<Integer> listOfClusterVertexes = clusteredDataset
 				.getAllVertexesForCluster(clusterIndex);
 		double[][] adjacencyMatrix = clusteredDataset.getAdjacencyMatrix();
-		int clusterSize = listOfClusterVertexes.size();
+		double clusterSize = (double) listOfClusterVertexes.size();
 
 		double returnSum = 0.0d;
 
 		for (int j = 0; j < clusterSize; ++j) {
 			int currentIndex = listOfClusterVertexes.get(j);
-			if (i == currentIndex)
-				continue;
-
 			returnSum += nodesDistanceCalculator.calculate(adjacencyMatrix, i,
 					currentIndex);
 		}
 
-		return 1.0d / (clusterSize * returnSum);
+		return (1.0d / clusterSize) * returnSum;
 	}
 	
 	@Override

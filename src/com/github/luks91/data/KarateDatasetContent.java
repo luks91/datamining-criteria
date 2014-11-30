@@ -27,7 +27,7 @@ class KarateDatasetContent extends AbstractDatasetContent {
 	}
 	
 	@Override
-	public ClusteredDataset getGroundTruthDataset() throws Exception {
+	protected ClusteredDataset createGroundTruthDataset() throws Exception {
 		/* http://spaghetti-os.blogspot.com/2014/05/zacharys-karate-club.html */
 		return new ClusteredDataset(
 				DataUtil.readAdjacencyMatrixFromGraphML(mDatasetFilePath), 

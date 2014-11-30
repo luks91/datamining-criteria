@@ -27,7 +27,7 @@ class SawmillStrikeDatasetContent extends AbstractDatasetContent {
 	}
 	
 	@Override
-	public ClusteredDataset getGroundTruthDataset() throws Exception {
+	protected ClusteredDataset createGroundTruthDataset() throws Exception {
 		return new ClusteredDataset(
 				DataUtil.readAdjacencyMatrixFromPairsFile(mDatasetFilePath, 
 						SAWMILL_STRIKE_VERTICES_AMOUNT), 

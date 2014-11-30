@@ -19,17 +19,18 @@ package com.github.luks91.clustering;
 import java.io.File;
 import java.io.IOException;
 
-import com.github.luks91.adapter.IClusteredDatasetAdapter;
-
 import net.sf.javaml.core.Dataset;
 import net.sf.javaml.tools.data.FileHandler;
 
-abstract class JavaMLClusteringBase implements IClustering {
+import com.github.luks91.clustering.NetworkClustererFactory.NetworkGraphClusterable;
+import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
 
-	protected final IClusteredDatasetAdapter<Dataset[]> mClusteringAdapter;
+abstract class AbstractJavaMLClusterer implements NetworkGraphClusterable {
 
-	public JavaMLClusteringBase(
-			IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+	protected final ClusteredDatasetAdaptable<Dataset[]> mClusteringAdapter;
+
+	public AbstractJavaMLClusterer(
+			ClusteredDatasetAdaptable<Dataset[]> clusteringAdapter) {
 		mClusteringAdapter = clusteringAdapter;
 	}
 

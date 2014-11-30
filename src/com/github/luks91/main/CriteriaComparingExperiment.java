@@ -164,12 +164,12 @@ class CriteriaComparingExperiment {
 		int verticesAmount = groundTruthDataset.size();
 
 		for (int currentDataset = 0; currentDataset < RANDOM_CLUSTERINGS_AMOUNT; ++currentDataset) {
-			int clustersAmount = 2; //mRandomizer.nextInt(5) + 2;
+			int clustersAmount = 11; //mRandomizer.nextInt(5) + 2;
 
 			int[] verticesToClusters = new int[verticesAmount];
 			for (int i = 0; i < verticesAmount; ++i) {
 				
-				if (i % 17 == 0){ 
+				if (i % 2 == 0){ 
 					verticesToClusters[i] = mRandomizer.nextInt(clustersAmount);
 				} else {
 					verticesToClusters[i] = groundTruthDataset.getClusterIndex(i);
@@ -192,7 +192,7 @@ class CriteriaComparingExperiment {
 		consideredCriterias.add(ClusteringCriteriaFactory.createPBMCriteriaCalculator());
 		consideredCriterias.add(ClusteringCriteriaFactory.createDunnIndexCriteriaCalculator());
 		consideredCriterias.add(ClusteringCriteriaFactory.createZStatisticsCriteriaCalculator());
-		//consideredCriterias.add(ClusteringCriteriaFactory.createPointBiserialCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createPointBiserialCriteriaCalculator());
 		return consideredCriterias;
 	}
 	
@@ -215,12 +215,12 @@ class CriteriaComparingExperiment {
 
 	private List<IDatasetContent> consideredDatasets() {
 		List<IDatasetContent> returnList = new ArrayList<>();
-		returnList.add(DatasetContentFactory.createZaharyWeightenedKarateDataset("dataset/karate.GraphML", 
-				"dataset/karate.GroundTruth"));
+		//returnList.add(DatasetContentFactory.createZaharyWeightenedKarateDataset("dataset/karate.GraphML", 
+		//		"dataset/karate.GroundTruth"));
 		//returnList.add(DatasetContentFactory.createSawmillStrikeDataset("dataset/sawmill.Pairs", 
 		//		"dataset/sawmill.GroundTruth"));
-		//returnList.add(DatasetContentFactory.createNCAAFootballDataset("dataset/ncaaFootball.Pairs", 
-		//		"dataset/ncaaFootball.GroundTruth"));
+		returnList.add(DatasetContentFactory.createNCAAFootballDataset("dataset/ncaaFootball.Pairs", 
+				"dataset/ncaaFootball.GroundTruth"));
 		return returnList;
 	}
 }

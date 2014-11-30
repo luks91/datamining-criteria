@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.luks91.adapter;
+package com.github.luks91.clustering;
 
-import com.github.luks91.data.ClusteredDataset;
+import java.util.Collection;
+import java.util.Set;
 
-public interface IClusteredDatasetAdapter<InitialType> {
+import com.github.luks91.clustering.NetworkClustererFactory.NetworkGraphClusterable;
+import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
+import com.github.luks91.util.DataUtil.Node;
 
-	public ClusteredDataset translateDataset(InitialType initialDataset, double[][] adjacencyMatrix);
-	
+abstract class AbstractJungClusterer implements NetworkGraphClusterable {
+
+	protected final ClusteredDatasetAdaptable<Collection<Set<Node>>> mClusteringAdapter;
+
+	public AbstractJungClusterer(ClusteredDatasetAdaptable<Collection<Set<Node>>> clusteringAdapter) {
+		mClusteringAdapter = clusteringAdapter;
+	}
 }

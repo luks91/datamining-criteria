@@ -17,42 +17,43 @@
 package com.github.luks91.clustering;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
 
-import net.sf.javaml.clustering.Clusterer;
-import net.sf.javaml.clustering.mcl.MCL;
-import net.sf.javaml.core.Dataset;
-import net.sf.javaml.distance.JaccardIndexSimilarity;
-
-import com.github.luks91.adapter.IClusteredDatasetAdapter;
 import com.github.luks91.data.ClusteredDataset;
+import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
+import com.github.luks91.util.DataUtil;
+import com.github.luks91.util.DataUtil.Edge;
+import com.github.luks91.util.DataUtil.Node;
 
-public class JavaMLMarkovClustering extends JavaMLClusteringBase {
+import edu.uci.ics.jung.algorithms.cluster.VoltageClusterer;
+import edu.uci.ics.jung.graph.Graph;
 
-	public JavaMLMarkovClustering(
-			IClusteredDatasetAdapter<Dataset[]> clusteringAdapter) {
+class JungVoltageClusterer extends AbstractJungClusterer {
+
+	public JungVoltageClusterer(ClusteredDatasetAdaptable<Collection<Set<Node>>> clusteringAdapter) {
 		super(clusteringAdapter);
 	}
-
+	
 	@Override
 	public ClusteredDataset performClustering(String filePath, int vertexAmount)
 			throws IOException {
+		
+		try {
+			Graph<Node, Edge> inputGraph = DataUtil.readGraphFromGraphML(filePath);
+			VoltageClusterer<Node, Edge> clusterer = new VoltageClusterer<>(inputGraph, 3);
 
-		Dataset rawData = constructDataset(filePath, vertexAmount);
-		return mClusteringAdapter.translateDataset(
-				performMarkovClustering(rawData),
-				constructAdjacencyMatrix(rawData));
-	}
-
-	private Dataset[] performMarkovClustering(Dataset rawData)
-			throws IOException {
-
-		Clusterer km = new MCL(new JaccardIndexSimilarity());
-		Dataset[] clusters = km.cluster(rawData);
-		return clusters;
+			return mClusteringAdapter.adapt(
+					clusterer.cluster(2),
+					DataUtil.readAdjacencyMatrixFromGraphML(filePath));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public String getDescription() {
-		return "JavaML Self Organizing Maps Clustering";
+		return "Jung Voltage Clusterer";
 	}
 }

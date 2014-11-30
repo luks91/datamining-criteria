@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.luks91.adapter;
+package com.github.luks91.data.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,13 @@ import org.gephi.clustering.api.Cluster;
 import org.gephi.graph.api.Node;
 
 import com.github.luks91.data.ClusteredDataset;
+import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
 
-public class GephiClusteredDatasetAdapter implements
-		IClusteredDatasetAdapter<Cluster[]> {
+class GephiClusteredDatasetAdapter implements
+		ClusteredDatasetAdaptable<Cluster[]> {
 
 	@Override
-	public ClusteredDataset translateDataset(Cluster[] initialDataset,
+	public ClusteredDataset adapt(Cluster[] initialDataset,
 			double[][] adjacencyMatrix) {
 
 		int[] clusteredNumber = new int[adjacencyMatrix.length];

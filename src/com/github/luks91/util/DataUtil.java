@@ -74,6 +74,32 @@ public final class DataUtil {
 
 		return returnAdjacencyMatrix;
 	}
+	
+	public static UndirectedGraph<Node, Edge> readGraphFromGraphML(String fileName)
+			throws SAXException, ParserConfigurationException, IOException {
+		
+		final UndirectedGraph<Node, Edge> graph = new UndirectedSparseMultigraph<>();
+		GraphMLReader<Hypergraph<Node, Edge>, Node, Edge> reader = new GraphMLReader<>(
+				new VertexFactory(), new EdgeFactory());
+		reader.load(fileName, graph);
+		Map<String, GraphMLMetadata<Edge>> edge_meta = reader.getEdgeMetadata();
+
+		for (Node firstNode : graph.getVertices()) {
+			for (Node secondNode : graph.getVertices()) {
+				if (firstNode.mNodeIndex == secondNode.mNodeIndex)
+					continue;
+
+				Edge verticesEdge = graph.findEdge(firstNode, secondNode);
+				if (verticesEdge == null)
+					continue;
+
+				verticesEdge.setEdgeWeight(edge_meta.get("weight").transformer
+						.transform(verticesEdge));
+			}
+		}
+
+		return graph;
+	}
 
 	public static int[] readGroundTruthClustering(String filePath, int verticesCount)
 			throws IOException {
@@ -116,15 +142,19 @@ public final class DataUtil {
 		}
 	}
 
-	private static final class Node {
+	public static final class Node {
 		private final int mNodeIndex;
 
 		public Node(int nodeIndex) {
 			mNodeIndex = nodeIndex;
 		}
+		
+		public int getNodeIndex() {
+			return mNodeIndex;
+		}
 	}
 
-	private static final class Edge {
+	public static final class Edge {
 		private final int mEdgeIndex;
 		private int mEdgeWeight;
 

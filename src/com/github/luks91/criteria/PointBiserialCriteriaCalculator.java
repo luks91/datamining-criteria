@@ -79,21 +79,21 @@ class PointBiserialCriteriaCalculator implements ClusteringCriteriaCalculable {
 			NodesDistanceCalculable nodesDistanceCalculator, double m) {
 		
 		double returnValue = 0.0d;
+		double distancesSum = calculateAllTheDistancesSum(
+				clusteredDataset, nodesDistanceCalculator);
 		
 		for (int i=0; i < clusteredDataset.size(); ++i) {
 			for (int j=0; j < clusteredDataset.size(); ++j) {
 				returnValue += calculateSInnerSum(clusteredDataset, 
-						nodesDistanceCalculator, i, j, m);
+						nodesDistanceCalculator, i, j, m, distancesSum);
 			}
 		}
 		
 		return Math.sqrt((1.0d / m) * returnValue);
 	}
 	
-	private double calculateSInnerSum(ClusteredDataset clusteredDataset,
-			NodesDistanceCalculable nodesDistanceCalculator, int i, int j, 
-			double m) {
-		
+	private double calculateAllTheDistancesSum(ClusteredDataset clusteredDataset,
+			NodesDistanceCalculable nodesDistanceCalculator) {
 		double returnValue = 0.0d;
 		for (int i2 = 0; i2 < clusteredDataset.size(); ++i2) {
 			for (int j2 = 0; j2 < clusteredDataset.size(); ++j2) {
@@ -101,11 +101,17 @@ class PointBiserialCriteriaCalculator implements ClusteringCriteriaCalculable {
 						clusteredDataset.getAdjacencyMatrix(), i2, j2);
 			}
 		}
+		return returnValue;
+	}
+	
+	private double calculateSInnerSum(ClusteredDataset clusteredDataset,
+			NodesDistanceCalculable nodesDistanceCalculator, int i, int j, 
+			double m, double totalSum) {
 		
 		double nodesDistance = nodesDistanceCalculator.calculate(
 				clusteredDataset.getAdjacencyMatrix(), i, j);
 		
-		return Math.pow(nodesDistance  - (1.0d / m) * returnValue, 2.0d);
+		return Math.pow(nodesDistance  - (1.0d / m) * totalSum, 2.0d);
 	}
 	
 	private double calculateSmallM1(ClusteredDataset clusteredDataset,
