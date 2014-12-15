@@ -35,7 +35,7 @@ class JavaMLMarkovClusterer extends AbstractJavaMLClusterer {
 
 	@Override
 	public ClusteredDataset performClustering(String filePath, int vertexAmount)
-			throws IOException {
+			throws Exception {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
 		return mClusteringAdapter.adapt(
@@ -53,6 +53,6 @@ class JavaMLMarkovClusterer extends AbstractJavaMLClusterer {
 
 	@Override
 	public String getDescription() {
-		return "JavaML Self Organizing Maps Clustering";
+		return "JavaML Markov Cluster Algorithm";
 	}
 }

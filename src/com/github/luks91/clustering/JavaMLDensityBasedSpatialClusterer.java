@@ -25,7 +25,7 @@ import net.sf.javaml.core.Dataset;
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
 
-public class JavaMLDensityBasedSpatialClusterer extends AbstractJavaMLClusterer {
+class JavaMLDensityBasedSpatialClusterer extends AbstractJavaMLClusterer {
 
 	public JavaMLDensityBasedSpatialClusterer(
 			ClusteredDatasetAdaptable<Dataset[]> clusteringAdapter) {
@@ -34,7 +34,7 @@ public class JavaMLDensityBasedSpatialClusterer extends AbstractJavaMLClusterer 
 
 	@Override
 	public ClusteredDataset performClustering(String filePath, int vertexAmount)
-			throws IOException {
+			throws Exception {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
 		return mClusteringAdapter.adapt(
@@ -45,7 +45,7 @@ public class JavaMLDensityBasedSpatialClusterer extends AbstractJavaMLClusterer 
 	private Dataset[] performDensityBasedSpatialClustering(Dataset rawData)
 			throws IOException {
 
-		Clusterer km = new DensityBasedSpatialClustering();
+		Clusterer km = new DensityBasedSpatialClustering(0.17, 3);
 		Dataset[] clusters = km.cluster(rawData);
 		return clusters;
 	}

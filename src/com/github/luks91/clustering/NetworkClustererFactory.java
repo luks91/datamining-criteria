@@ -16,8 +16,6 @@
 
 package com.github.luks91.clustering;
 
-import java.io.IOException;
-
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory;
 
@@ -41,15 +39,30 @@ public final class NetworkClustererFactory {
 				ClusteredDatasetAdapterFactory.createJungClusteredDatasetAdapter());
 	}
 	
-	public static NetworkGraphClusterable createJavaMLKNodeClusterer() {
-		return new JavaMLKNodeClusterer(
+	public static NetworkGraphClusterable createJavaMLKMeansClusterer() {
+		return new JavaMLKMeansClusterer(
 				ClusteredDatasetAdapterFactory.createJavaMLClusteredDatasetAdapter());
 	}
 
+	public static NetworkGraphClusterable createJavaMLMarkovClusterer() {
+		return new JavaMLMarkovClusterer(
+				ClusteredDatasetAdapterFactory.createJavaMLClusteredDatasetAdapter());
+	}
+	
+	public static NetworkGraphClusterable createJavaMLSOMClusterer() {
+		return new JavaMLSOMClusterer(
+				ClusteredDatasetAdapterFactory.createJavaMLClusteredDatasetAdapter());
+	}
+	
+	public static NetworkGraphClusterable createJavaMLDensityBasedSpatialClusterer() {
+		return new JavaMLDensityBasedSpatialClusterer(
+				ClusteredDatasetAdapterFactory.createJavaMLClusteredDatasetAdapter());
+	}
+	
 	public static interface NetworkGraphClusterable {
 
 		public ClusteredDataset performClustering(String filePath,
-				int vertexAmount) throws IOException;
+				int vertexAmount) throws Exception;
 
 		public String getDescription();
 	}

@@ -38,15 +38,11 @@ class JavaMLClusteredDatasetAdapter implements ClusteredDatasetAdaptable<Dataset
 		int[] clusterIndexes = new int[34];
 
 		for (int clustersIndex = 0; clustersIndex < clusters.length; clustersIndex++) {
-			System.out.println("Cluster " + clustersIndex + " contains: "
-					+ clusters[clustersIndex].size());
 			List<Integer> clusterContent = new ArrayList<>();
 
 			for (int nodeIndex = 0; nodeIndex < clusters[clustersIndex].size(); nodeIndex++) {
 				clusterContent.add(nodeIndex);
-				
-				System.out.println("TAG: " + clusters[clustersIndex].get(nodeIndex));
-				clusterIndexes[clusters[clustersIndex].get(nodeIndex).getID()] = clustersIndex;
+				clusterIndexes[(int) clusters[clustersIndex].get(nodeIndex).classValue()] = clustersIndex;
 			}
 		}
 

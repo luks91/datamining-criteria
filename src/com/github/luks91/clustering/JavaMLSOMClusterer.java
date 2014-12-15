@@ -34,7 +34,7 @@ class JavaMLSOMClusterer extends AbstractJavaMLClusterer {
 
 	@Override
 	public ClusteredDataset performClustering(String filePath, int vertexAmount)
-			throws IOException {
+			throws Exception {
 
 		Dataset rawData = constructDataset(filePath, vertexAmount);
 		return mClusteringAdapter.adapt(

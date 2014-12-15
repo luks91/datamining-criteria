@@ -1,6 +1,6 @@
-###### DATASET: Zahary Karate Dataset - Weightened Undirected. #####
-For clustering: Jung Bicomponent Clusterer
-    [Jaccard] Jaccard Coefficient External Evaluation: 0.4605089949506484
+###### DATASET: Zahary Karate Dataset - Weightened Undirected. #####;
+For clustering: Jung Bicomponent Clusterer;
+    [Jaccard] Jaccard Coefficient External Evaluation: 0.4605089949506484;
 Modularity Q Criteria Calculator;Neighbour Overlap Distance Calculator;0.10046756994808943
 Modularity Q Criteria Calculator;Edge Path Distance Calculator;0.10046756994808943
 Modularity Q Criteria Calculator;Adjacency Relation Distance Calculator;0.10046756994808943
@@ -37,8 +37,8 @@ Point Biserial Criteria Calculator;Neighbour Overlap Distance Calculator;55.6382
 Point Biserial Criteria Calculator;Edge Path Distance Calculator;50.91231568412392
 Point Biserial Criteria Calculator;Adjacency Relation Distance Calculator;59.291096242048255
 Point Biserial Criteria Calculator;Pearson Correlation Distance Calculator;46.487156918183686
-For clustering: Jung Edge Betweenness Clusterer
-    [Jaccard] Jaccard Coefficient External Evaluation: 0.4866310160427806
+For clustering: Jung Edge Betweenness Clusterer;
+    [Jaccard] Jaccard Coefficient External Evaluation: 0.4866310160427806;
 Modularity Q Criteria Calculator;Neighbour Overlap Distance Calculator;0.025552369708213844
 Modularity Q Criteria Calculator;Edge Path Distance Calculator;0.025552369708213844
 Modularity Q Criteria Calculator;Adjacency Relation Distance Calculator;0.025552369708213844
@@ -75,8 +75,8 @@ Point Biserial Criteria Calculator;Neighbour Overlap Distance Calculator;0.0
 Point Biserial Criteria Calculator;Edge Path Distance Calculator;0.0
 Point Biserial Criteria Calculator;Adjacency Relation Distance Calculator;0.0
 Point Biserial Criteria Calculator;Pearson Correlation Distance Calculator;0.0
-For clustering: Jung Voltage Clusterer
-    [Jaccard] Jaccard Coefficient External Evaluation: 0.5187105584220729
+For clustering: Jung Voltage Clusterer;
+    [Jaccard] Jaccard Coefficient External Evaluation: 0.5187105584220729;
 Modularity Q Criteria Calculator;Neighbour Overlap Distance Calculator;0.12809729952587093
 Modularity Q Criteria Calculator;Edge Path Distance Calculator;0.12809729952587093
 Modularity Q Criteria Calculator;Adjacency Relation Distance Calculator;0.12809729952587093
@@ -113,3 +113,117 @@ Point Biserial Criteria Calculator;Neighbour Overlap Distance Calculator;29.0066
 Point Biserial Criteria Calculator;Edge Path Distance Calculator;40.113261178543624
 Point Biserial Criteria Calculator;Adjacency Relation Distance Calculator;27.75077753608798
 Point Biserial Criteria Calculator;Pearson Correlation Distance Calculator;20.57098804580455
+For clustering: JavaML Density Based Spatial Clustering;
+    [Jaccard] Jaccard Coefficient External Evaluation: 0.4526717087868168;
+Modularity Q Criteria Calculator;Neighbour Overlap Distance Calculator;0.021675221126581313
+Modularity Q Criteria Calculator;Edge Path Distance Calculator;0.021675221126581313
+Modularity Q Criteria Calculator;Adjacency Relation Distance Calculator;0.021675221126581313
+Modularity Q Criteria Calculator;Pearson Correlation Distance Calculator;0.021675221126581313
+C Index Criteria Calculator;Neighbour Overlap Distance Calculator;0.262039093595844
+C Index Criteria Calculator;Edge Path Distance Calculator;0.8492958328170821
+C Index Criteria Calculator;Adjacency Relation Distance Calculator;0.558564512088685
+C Index Criteria Calculator;Pearson Correlation Distance Calculator;0.3547832539308114
+Davies Bouldin Criteria Calculator;Neighbour Overlap Distance Calculator;1.1127941772401195
+Davies Bouldin Criteria Calculator;Edge Path Distance Calculator;Infinity
+Davies Bouldin Criteria Calculator;Adjacency Relation Distance Calculator;1.2980264106305408
+Davies Bouldin Criteria Calculator;Pearson Correlation Distance Calculator;0.8386866098842202
+Silhouette Width Criteria 2 Calculator;Neighbour Overlap Distance Calculator;-0.016609213100506857
+Silhouette Width Criteria 2 Calculator;Edge Path Distance Calculator;-0.7273075301279422
+Silhouette Width Criteria 2 Calculator;Adjacency Relation Distance Calculator;-0.03514983343082651
+Silhouette Width Criteria 2 Calculator;Pearson Correlation Distance Calculator;-0.04840170272804344
+Variance Ratio Criteria Calculator;Neighbour Overlap Distance Calculator;5.0978434527518806
+Variance Ratio Criteria Calculator;Edge Path Distance Calculator;5.81683752699527E-306
+Variance Ratio Criteria Calculator;Adjacency Relation Distance Calculator;4.234576743879832
+Variance Ratio Criteria Calculator;Pearson Correlation Distance Calculator;5.696712179536347
+PBM Criteria Calculator;Neighbour Overlap Distance Calculator;0.019614075103632243
+PBM Criteria Calculator;Edge Path Distance Calculator;1.650263111726175E-309
+PBM Criteria Calculator;Adjacency Relation Distance Calculator;0.017460327313029173
+PBM Criteria Calculator;Pearson Correlation Distance Calculator;0.023525812774654476
+Dunn Index Criteria Calculator;Neighbour Overlap Distance Calculator;0.6032223871104515
+Dunn Index Criteria Calculator;Edge Path Distance Calculator;9.3947562914749E-310
+Dunn Index Criteria Calculator;Adjacency Relation Distance Calculator;0.24376003116884168
+Dunn Index Criteria Calculator;Pearson Correlation Distance Calculator;0.21459624380632653
+Z-Statistics Criteria Calculator;Neighbour Overlap Distance Calculator;503.46955871547294
+Z-Statistics Criteria Calculator;Edge Path Distance Calculator;27.83821941138085
+Z-Statistics Criteria Calculator;Adjacency Relation Distance Calculator;411.2798888028743
+Z-Statistics Criteria Calculator;Pearson Correlation Distance Calculator;277.5012953846243
+Point Biserial Criteria Calculator;Neighbour Overlap Distance Calculator;85.09624107865456
+Point Biserial Criteria Calculator;Edge Path Distance Calculator;32.721512240961836
+Point Biserial Criteria Calculator;Adjacency Relation Distance Calculator;81.6617565661445
+Point Biserial Criteria Calculator;Pearson Correlation Distance Calculator;82.78286251258804
+For clustering: JavaML KNode Clustering;
+    [Jaccard] Jaccard Coefficient External Evaluation: 0.495616880650531;
+Modularity Q Criteria Calculator;Neighbour Overlap Distance Calculator;0.03703325880534378
+Modularity Q Criteria Calculator;Edge Path Distance Calculator;0.03703325880534378
+Modularity Q Criteria Calculator;Adjacency Relation Distance Calculator;0.03703325880534378
+Modularity Q Criteria Calculator;Pearson Correlation Distance Calculator;0.03703325880534378
+C Index Criteria Calculator;Neighbour Overlap Distance Calculator;0.16444965781240056
+C Index Criteria Calculator;Edge Path Distance Calculator;0.5844549976285407
+C Index Criteria Calculator;Adjacency Relation Distance Calculator;0.13367560477810442
+C Index Criteria Calculator;Pearson Correlation Distance Calculator;0.19711628953958574
+Davies Bouldin Criteria Calculator;Neighbour Overlap Distance Calculator;1.1335422983649406
+Davies Bouldin Criteria Calculator;Edge Path Distance Calculator;Infinity
+Davies Bouldin Criteria Calculator;Adjacency Relation Distance Calculator;1.049729747166226
+Davies Bouldin Criteria Calculator;Pearson Correlation Distance Calculator;0.9536897948681037
+Silhouette Width Criteria 2 Calculator;Neighbour Overlap Distance Calculator;-0.004485760022268611
+Silhouette Width Criteria 2 Calculator;Edge Path Distance Calculator;-0.4214964398268393
+Silhouette Width Criteria 2 Calculator;Adjacency Relation Distance Calculator;0.007091764324836521
+Silhouette Width Criteria 2 Calculator;Pearson Correlation Distance Calculator;-0.011291886027816427
+Variance Ratio Criteria Calculator;Neighbour Overlap Distance Calculator;5.963973383298846
+Variance Ratio Criteria Calculator;Edge Path Distance Calculator;3.8400000000000003
+Variance Ratio Criteria Calculator;Adjacency Relation Distance Calculator;5.849053892822862
+Variance Ratio Criteria Calculator;Pearson Correlation Distance Calculator;7.24247488735247
+PBM Criteria Calculator;Neighbour Overlap Distance Calculator;0.01903750785850099
+PBM Criteria Calculator;Edge Path Distance Calculator;4.406110624662539E305
+PBM Criteria Calculator;Adjacency Relation Distance Calculator;0.030778091073152398
+PBM Criteria Calculator;Pearson Correlation Distance Calculator;0.02329879384851664
+Dunn Index Criteria Calculator;Neighbour Overlap Distance Calculator;0.63421199445618
+Dunn Index Criteria Calculator;Edge Path Distance Calculator;1.020708484299335E-309
+Dunn Index Criteria Calculator;Adjacency Relation Distance Calculator;0.4724121677126524
+Dunn Index Criteria Calculator;Pearson Correlation Distance Calculator;0.36767879767031264
+Z-Statistics Criteria Calculator;Neighbour Overlap Distance Calculator;505.3776222990005
+Z-Statistics Criteria Calculator;Edge Path Distance Calculator;20.73916072443412
+Z-Statistics Criteria Calculator;Adjacency Relation Distance Calculator;373.87650297977484
+Z-Statistics Criteria Calculator;Pearson Correlation Distance Calculator;272.46424185337514
+Point Biserial Criteria Calculator;Neighbour Overlap Distance Calculator;72.45628572158397
+Point Biserial Criteria Calculator;Edge Path Distance Calculator;10.995626375615204
+Point Biserial Criteria Calculator;Adjacency Relation Distance Calculator;51.594122637732426
+Point Biserial Criteria Calculator;Pearson Correlation Distance Calculator;65.78926192806186
+For clustering: JavaML Self Organizing Maps Clustering;
+    [Jaccard] Jaccard Coefficient External Evaluation: 0.6724051154863459;
+Modularity Q Criteria Calculator;Neighbour Overlap Distance Calculator;0.14105094518991249
+Modularity Q Criteria Calculator;Edge Path Distance Calculator;0.14105094518991249
+Modularity Q Criteria Calculator;Adjacency Relation Distance Calculator;0.14105094518991249
+Modularity Q Criteria Calculator;Pearson Correlation Distance Calculator;0.14105094518991249
+C Index Criteria Calculator;Neighbour Overlap Distance Calculator;0.22555020106813498
+C Index Criteria Calculator;Edge Path Distance Calculator;0.6250526576632385
+C Index Criteria Calculator;Adjacency Relation Distance Calculator;0.3239879888281027
+C Index Criteria Calculator;Pearson Correlation Distance Calculator;0.24271250242535564
+Davies Bouldin Criteria Calculator;Neighbour Overlap Distance Calculator;1.4269828253455654
+Davies Bouldin Criteria Calculator;Edge Path Distance Calculator;Infinity
+Davies Bouldin Criteria Calculator;Adjacency Relation Distance Calculator;2.796286048908365
+Davies Bouldin Criteria Calculator;Pearson Correlation Distance Calculator;2.5186522430574736
+Silhouette Width Criteria 2 Calculator;Neighbour Overlap Distance Calculator;-0.008997308056958845
+Silhouette Width Criteria 2 Calculator;Edge Path Distance Calculator;-0.6793731631175604
+Silhouette Width Criteria 2 Calculator;Adjacency Relation Distance Calculator;-0.07055159848826993
+Silhouette Width Criteria 2 Calculator;Pearson Correlation Distance Calculator;-0.03648795844706942
+Variance Ratio Criteria Calculator;Neighbour Overlap Distance Calculator;15.23164284430627
+Variance Ratio Criteria Calculator;Edge Path Distance Calculator;1.9887006968390017E-306
+Variance Ratio Criteria Calculator;Adjacency Relation Distance Calculator;8.649157608140422
+Variance Ratio Criteria Calculator;Pearson Correlation Distance Calculator;18.621652270917544
+PBM Criteria Calculator;Neighbour Overlap Distance Calculator;0.016728882461919194
+PBM Criteria Calculator;Edge Path Distance Calculator;0.057726063829787226
+PBM Criteria Calculator;Adjacency Relation Distance Calculator;0.012264561334440144
+PBM Criteria Calculator;Pearson Correlation Distance Calculator;0.02157046392335171
+Dunn Index Criteria Calculator;Neighbour Overlap Distance Calculator;0.7024086106047137
+Dunn Index Criteria Calculator;Edge Path Distance Calculator;1.140791835393377E-309
+Dunn Index Criteria Calculator;Adjacency Relation Distance Calculator;0.23328003635899983
+Dunn Index Criteria Calculator;Pearson Correlation Distance Calculator;0.3995453059532888
+Z-Statistics Criteria Calculator;Neighbour Overlap Distance Calculator;271.73976122845016
+Z-Statistics Criteria Calculator;Edge Path Distance Calculator;19.88964268316983
+Z-Statistics Criteria Calculator;Adjacency Relation Distance Calculator;203.26084429280385
+Z-Statistics Criteria Calculator;Pearson Correlation Distance Calculator;138.698551214181
+Point Biserial Criteria Calculator;Neighbour Overlap Distance Calculator;-13.363267709961429
+Point Biserial Criteria Calculator;Edge Path Distance Calculator;15.161422543982209
+Point Biserial Criteria Calculator;Adjacency Relation Distance Calculator;-23.032266645955286
+Point Biserial Criteria Calculator;Pearson Correlation Distance Calculator;-23.69162105436469

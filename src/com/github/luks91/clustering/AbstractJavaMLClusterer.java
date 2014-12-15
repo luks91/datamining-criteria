@@ -16,14 +16,15 @@
 
 package com.github.luks91.clustering;
 
-import java.io.File;
-import java.io.IOException;
-
 import net.sf.javaml.core.Dataset;
-import net.sf.javaml.tools.data.FileHandler;
+import net.sf.javaml.core.DefaultDataset;
+import net.sf.javaml.core.DenseInstance;
+import net.sf.javaml.core.Instance;
+import net.sf.javaml.filter.normalize.NormalizeMidrange;
 
 import com.github.luks91.clustering.NetworkClustererFactory.NetworkGraphClusterable;
 import com.github.luks91.data.adapter.ClusteredDatasetAdapterFactory.ClusteredDatasetAdaptable;
+import com.github.luks91.util.DataUtil;
 
 abstract class AbstractJavaMLClusterer implements NetworkGraphClusterable {
 
@@ -35,8 +36,21 @@ abstract class AbstractJavaMLClusterer implements NetworkGraphClusterable {
 	}
 
 	protected Dataset constructDataset(String filePath, int vertexAmount)
-			throws IOException {
-		return FileHandler.loadDataset(new File(filePath), vertexAmount, " ");
+			throws Exception {
+
+		double[][] adjacencyMatrix = DataUtil.readAdjacencyMatrixFromGraphML(filePath);
+		Dataset data = new DefaultDataset();
+		
+		for (int i = 0; i < adjacencyMatrix.length; ++i) {
+			Instance currentInstance = new DenseInstance(adjacencyMatrix[i], i);
+			data.add(currentInstance);
+		}
+		
+		NormalizeMidrange nmr=new NormalizeMidrange(0.5, 1.0);
+		nmr.build(data);
+		nmr.filter(data);
+		
+		return data;
 	}
 
 	protected double[][] constructAdjacencyMatrix(Dataset rawData) {

@@ -63,12 +63,12 @@ class ClusteringComparingExperiment {
 				
 				for (ClusteringCriteriaCalculable consideredCriteria : allTheConsideredCriterias()) {
 					for (NodesDistanceCalculable distanceCalculator : allTheDistanceCalculators()) {
-						
+
 						try {
-						double averageValue = 0.0d;
-						
-						for (int i=0; i < performedClusterings.size(); ++i) {
-							averageValue += consideredCriteria.calculateCriteria(performedClusterings.get(i), 
+							double averageValue = 0.0d;
+
+							for (int i = 0; i < performedClusterings.size(); ++i) {
+								averageValue += consideredCriteria.calculateCriteria(performedClusterings.get(i), 
 									distanceCalculator);
 						}
 						
@@ -100,6 +100,9 @@ class ClusteringComparingExperiment {
 		returnList.add(NetworkClustererFactory.createJungBicomponentClusterer());
 		returnList.add(NetworkClustererFactory.createJungEdgeBetweennessClusterer());
 		returnList.add(NetworkClustererFactory.createJungVoltageClusterer());
+		returnList.add(NetworkClustererFactory.createJavaMLDensityBasedSpatialClusterer());
+		returnList.add(NetworkClustererFactory.createJavaMLKMeansClusterer());
+		returnList.add(NetworkClustererFactory.createJavaMLSOMClusterer());
 		return returnList;
 	}
 	
