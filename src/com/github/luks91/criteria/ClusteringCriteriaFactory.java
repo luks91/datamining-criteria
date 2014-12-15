@@ -19,8 +19,10 @@ package com.github.luks91.criteria;
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 
-public class ClusteringCriteriaFactory {
+public final class ClusteringCriteriaFactory {
 
+	private ClusteringCriteriaFactory() {}
+	
 	public static ClusteringCriteriaCalculable createCIndexCriteriaCalculator() {
 		return new CIndexCriteriaCalculator();
 	}

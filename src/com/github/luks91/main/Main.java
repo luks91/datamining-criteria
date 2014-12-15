@@ -18,6 +18,7 @@ package com.github.luks91.main;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		new CriteriaComparingExperiment().perform();
+		//new CriteriaComparingExperiment().perform();
+		new ClusteringComparingExperiment().perform();
 	}
 }

@@ -21,16 +21,20 @@ import java.util.List;
 
 import com.github.luks91.clustering.NetworkClustererFactory;
 import com.github.luks91.clustering.NetworkClustererFactory.NetworkGraphClusterable;
+import com.github.luks91.criteria.ClusteringCriteriaFactory;
+import com.github.luks91.criteria.ClusteringCriteriaFactory.ClusteringCriteriaCalculable;
 import com.github.luks91.data.ClusteredDataset;
 import com.github.luks91.data.DatasetContentFactory;
 import com.github.luks91.data.DatasetContentFactory.IDatasetContent;
+import com.github.luks91.distance.NodesDistanceFactory;
+import com.github.luks91.distance.NodesDistanceFactory.NodesDistanceCalculable;
 import com.github.luks91.evaluation.ExternalEvaluationFactory;
 import com.github.luks91.evaluation.ExternalEvaluationFactory.ExternalEvaluationCalculable;
 
 
 class ClusteringComparingExperiment {
 
-	private static final int CLUSTERINGS_AMOUNT = 5;
+	private static final int CLUSTERINGS_AMOUNT = 30;
 	
 	public void perform() throws Exception {
 		for (IDatasetContent consideredDataset : allTheConsideredDatasets()) {
@@ -49,12 +53,33 @@ class ClusteringComparingExperiment {
 					double[] externalEvaluations = new double[CLUSTERINGS_AMOUNT];
 					for (int i=0; i < performedClusterings.size(); ++i) {
 						ClusteredDataset obtainedClustering = performedClusterings.get(i);
-						consideredExternalEvaluation.calculateExternalEvaluation(
+						externalEvaluations[i] = consideredExternalEvaluation.calculateExternalEvaluation(
 								obtainedClustering, consideredDataset.getGroundTruthDataset());
 					}
 					
 					System.out.print("    " + consideredExternalEvaluation.toString() + ": ");
 					System.out.println(calculateAverage(externalEvaluations));
+				}
+				
+				for (ClusteringCriteriaCalculable consideredCriteria : allTheConsideredCriterias()) {
+					for (NodesDistanceCalculable distanceCalculator : allTheDistanceCalculators()) {
+						
+						try {
+						double averageValue = 0.0d;
+						
+						for (int i=0; i < performedClusterings.size(); ++i) {
+							averageValue += consideredCriteria.calculateCriteria(performedClusterings.get(i), 
+									distanceCalculator);
+						}
+						
+						averageValue = averageValue / (1.0d * performedClusterings.size());
+						System.out.println(consideredCriteria.toString() + ";" + distanceCalculator.toString() + ";"
+								+ averageValue);
+						} catch(Exception e) {
+							System.out.println(consideredCriteria.toString() + ";" + distanceCalculator.toString() + ";"
+									+ "FAILED");
+						}
+					}
 				}
 			}
 		}
@@ -83,6 +108,29 @@ class ClusteringComparingExperiment {
 		returnList.add(DatasetContentFactory.createZaharyWeightenedKarateDataset("dataset/karate.GraphML", 
 				"dataset/karate.GroundTruth"));
 		return returnList;
+	}
+	
+	private List<ClusteringCriteriaCalculable> allTheConsideredCriterias() {
+		List<ClusteringCriteriaCalculable> consideredCriterias = new ArrayList<>();
+		consideredCriterias.add(ClusteringCriteriaFactory.createModularityCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createCIndexCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createDBCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createSWC2CriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createVarianceRatioCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createPBMCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createDunnIndexCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createZStatisticsCriteriaCalculator());
+		consideredCriterias.add(ClusteringCriteriaFactory.createPointBiserialCriteriaCalculator());
+		return consideredCriterias;
+	}
+	
+	private List<NodesDistanceCalculable> allTheDistanceCalculators() {
+		List<NodesDistanceCalculable> consideredDistanceCalculators = new ArrayList<>();
+		consideredDistanceCalculators.add(NodesDistanceFactory.createNeighbourOverlapDistanceCalculator());
+		consideredDistanceCalculators.add(NodesDistanceFactory.createEdgePathDistanceCalculator());
+		consideredDistanceCalculators.add(NodesDistanceFactory.createAdjacencyRelationDistanceCalculator());
+		consideredDistanceCalculators.add(NodesDistanceFactory.createPearsonCorrelationDistanceCalculator());
+		return consideredDistanceCalculators;
 	}
 	
 	private Iterable<ExternalEvaluationCalculable> allTheExternalEvaluators() {
